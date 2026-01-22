@@ -5,42 +5,40 @@
   <title>AniGeekNews</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+  <!-- BASE DO GITHUB PAGES -->
+  <base href="/Grupo-YshippCommerce-/" />
+
   <!-- Estilos globais -->
-  <link rel="stylesheet" href="./estilos-globais/estilos-base.css">
-  <link rel="stylesheet" href="./estilos-globais/estilos-layout.css">
-  <link rel="stylesheet" href="./estilos-globais/estilos-componentes.css">
-  <link rel="stylesheet" href="./estilos-globais/estilos-tema.css">
+  <link rel="stylesheet" href="estilos-globais/estilos-base.css">
+  <link rel="stylesheet" href="estilos-globais/estilos-layout.css">
+  <link rel="stylesheet" href="estilos-globais/estilos-componentes.css">
+  <link rel="stylesheet" href="estilos-globais/estilos-tema.css">
 </head>
 <body>
 
-  <!-- Layout principal será injetado aqui -->
   <div id="app"></div>
 
-  <!-- =============================
-       INFRAESTRUTURA BASE
-  ============================== -->
-
   <!-- Firebase -->
-  <script type="module" src="./infraestrutura-firebase/firebase-config.js"></script>
-  <script type="module" src="./infraestrutura-firebase/firebase-firestore.js"></script>
-  <script type="module" src="./infraestrutura-firebase/firebase-auth.js"></script>
-  <script type="module" src="./infraestrutura-firebase/firebase-analytics.js"></script>
+  <script type="module" src="infraestrutura-firebase/firebase-config.js"></script>
+  <script type="module" src="infraestrutura-firebase/firebase-firestore.js"></script>
+  <script type="module" src="infraestrutura-firebase/firebase-auth.js"></script>
+  <script type="module" src="infraestrutura-firebase/firebase-analytics.js"></script>
 
-  <!-- Estado global -->
-  <script type="module" src="./estado-aplicacao/estado-usuario.js"></script>
-  <script type="module" src="./estado-aplicacao/estado-navegacao.js"></script>
-  <script type="module" src="./estado-aplicacao/estado-conteudo.js"></script>
+  <!-- Estado -->
+  <script type="module" src="estado-aplicacao/estado-usuario.js"></script>
+  <script type="module" src="estado-aplicacao/estado-navegacao.js"></script>
+  <script type="module" src="estado-aplicacao/estado-conteudo.js"></script>
 
   <!-- Comunicação -->
-  <script type="module" src="./sistema-comunicacao/contratos-eventos.js"></script>
-  <script type="module" src="./sistema-comunicacao/barramento-eventos.js"></script>
+  <script type="module" src="sistema-comunicacao/contratos-eventos.js"></script>
+  <script type="module" src="sistema-comunicacao/barramento-eventos.js"></script>
 
   <!-- Navegação -->
-  <script type="module" src="./scripts-navegacao/gerenciador-abas.js"></script>
-  <script type="module" src="./scripts-navegacao/historico-abas.js"></script>
+  <script type="module" src="scripts-navegacao/gerenciador-abas.js"></script>
+  <script type="module" src="scripts-navegacao/historico-abas.js"></script>
 
   <!-- Layout -->
-  <script type="module" src="./layout-principal/layout.js"></script>
+  <script type="module" src="layout-principal/layout.js"></script>
 
 </body>
 </html>
