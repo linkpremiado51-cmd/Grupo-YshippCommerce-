@@ -1,0 +1,22 @@
+.card-noticia {
+  border-radius: 12px;
+  background: #fff;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.card-noticia__categoria {
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.card-noticia__titulo a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.card-noticia__resumo {
+  font-size: 14px;
+  color: #555;
+}
