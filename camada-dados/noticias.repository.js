@@ -1,66 +1,83 @@
-// camada-dados/noticias.repository.js
+/**
+ * Repositório de Notícias - AniGeekNews
+ * Responsabilidade: Abstrair todas as consultas ao Firestore relacionadas a notícias.
+ */
 
-import { db } from '../infraestrutura-firebase/firebase-firestore.js'; import { collection, query, where, orderBy, limit, getDocs, doc, getDoc } from 'firebase/firestore';
+import { db } from '../infraestrutura-firebase/firebase-config.js';
+import { 
+    collection, 
+    query, 
+    where, 
+    getDocs, 
+    orderBy, 
+    limit,
+    doc,
+    getDoc 
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 /**
+ * Busca notícias filtradas por categoria (para uso nas abas).
+ * @param {string} categoria - Ex: 'analises', 'futebol'
+ * @param {number} quantidade - Limite de documentos
+ */
+export async function buscarNoticiasPorCategoria(categoria, quantidade = 10) {
+    try {
+        const noticiasRef = collection(db, "noticias");
+        const q = query(
+            noticiasRef, 
+            where("categoria", "==", categoria),
+            orderBy("dataPublicacao", "desc"),
+            limit(quantidade)
+        );
 
-Nome da coleção principal de notícias no Firestore */ const COLLECTION_NOTICIAS = 'noticias';
-
-
-/**
-
-Busca notícias por categoria (para abas)
-
-@param {Object} params
-
-@param {string} params.categoria
-
-@param {number} params.limite */ export async function buscarNoticiasPorCategoria({ categoria, limite = 10 }) { const noticiasRef = collection(db, COLLECTION_NOTICIAS);
-
-
-const q = query( noticiasRef, where('categoria', '==', categoria), orderBy('timestamp', 'desc'), limit(limite) );
-
-const snapshot = await getDocs(q);
-
-return snapshot.docs.map(docSnap => ({ id: docSnap.id, ...docSnap.data() })); }
-
-/**
-
-Busca notícias recentes (aba início)
-
-@param {number} limite */ export async function buscarNoticiasRecentes(limite = 10) { const noticiasRef = collection(db, COLLECTION_NOTICIAS);
-
-
-const q = query( noticiasRef, orderBy('timestamp', 'desc'), limit(limite) );
-
-const snapshot = await getDocs(q);
-
-return snapshot.docs.map(docSnap => ({ id: docSnap.id, ...docSnap.data() })); }
+        const querySnapshot = await getDocs(q);
+        return querySnapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+        }));
+    } catch (error) {
+        console.error(`Erro ao buscar notícias da categoria ${categoria}:`, error);
+        return [];
+    }
+}
 
 /**
+ * Busca as notícias mais recentes (Geral para a aba Início).
+ */
+export async function buscarUltimasNoticias(quantidade = 6) {
+    try {
+        const noticiasRef = collection(db, "noticias");
+        const q = query(
+            noticiasRef, 
+            orderBy("dataPublicacao", "desc"), 
+            limit(quantidade)
+        );
 
-Busca uma notícia específica (para páginas completas)
-
-@param {string} id */ export async function buscarNoticiaPorId(id) { const noticiaRef = doc(db, COLLECTION_NOTICIAS, id); const snapshot = await getDoc(noticiaRef);
-
-
-if (!snapshot.exists()) return null;
-
-return { id: snapshot.id, ...snapshot.data() }; }
+        const querySnapshot = await getDocs(q);
+        return querySnapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+        }));
+    } catch (error) {
+        console.error("Erro ao buscar últimas notícias:", error);
+        return [];
+    }
+}
 
 /**
-
-Busca notícias relacionadas por tags
-
-@param {Array<string>} tags
-
-@param {number} limite */ export async function buscarNoticiasRelacionadas(tags = [], limite = 5) { if (!tags.length) return [];
-
-
-const noticiasRef = collection(db, COLLECTION_NOTICIAS);
-
-const q = query( noticiasRef, where('tags', 'array-contains-any', tags), orderBy('timestamp', 'desc'), limit(limite) );
-
-const snapshot = await getDocs(q);
-
-return snapshot.docs.map(docSnap => ({ id: docSnap.id, ...docSnap.data() })); }
+ * Busca uma notícia específica pelo ID (para o sistema de recomendação ou busca).
+ */
+export async function buscarNoticiaPorId(id) {
+    try {
+        const docRef = doc(db, "noticias", id);
+        const docSnap = await getDoc(docRef);
+        
+        if (docSnap.exists()) {
+            return { id: docSnap.id, ...docSnap.data() };
+        }
+        return null;
+    } catch (error) {
+        console.error("Erro ao buscar notícia por ID:", error);
+        throw error;
+    }
+}
