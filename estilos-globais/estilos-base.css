@@ -1,1 +1,88 @@
 
+/* AniGeekNews - Estilos Base
+    Responsabilidade: Reset, Variáveis, Tipografia e Comportamentos Fundamentais.
+*/
+
+:root {
+    /* Paleta de Cores Principal */
+    --cor-primaria: #ff4500; /* Laranja Geek */
+    --cor-secundaria: #1a1a1a; /* Preto Profundo */
+    --cor-acento: #00d4ff; /* Azul Tecnológico */
+    
+    /* Cores de Fundo e Superfície */
+    --bg-principal: #f4f4f9;
+    --bg-card: #ffffff;
+    --texto-principal: #333333;
+    --texto-suave: #666666;
+    --branco: #ffffff;
+
+    /* Tipografia */
+    --fonte-principal: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    --fonte-titulos: 'Georgia', serif;
+
+    /* Espaçamentos e Bordas */
+    --gap-padrao: 20px;
+    --raio-borda: 8px;
+    --sombra-suave: 0 4px 12px rgba(0, 0, 0, 0.1);
+    
+    /* Transições */
+    --transicao-suave: all 0.3s ease;
+}
+
+/* Reset Básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--fonte-principal);
+    background-color: var(--bg-principal);
+    color: var(--texto-principal);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Links e Botões */
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: var(--transicao-suave);
+}
+
+button {
+    cursor: pointer;
+    border: none;
+    outline: none;
+    background: none;
+    font-family: inherit;
+}
+
+/* Imagens Responsivas */
+img {
+    max-width: 100%;
+    display: block;
+}
+
+/* Helpers de Visibilidade */
+.loader-hidden {
+    display: none !important;
+}
+
+/* Scrollbar Personalizada (Opcional para visual moderno) */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #e0e0e0;
+}
+::-webkit-scrollbar-thumb {
+    background: var(--cor-primaria);
+    border-radius: 4px;
+}
