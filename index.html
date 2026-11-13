@@ -1,0 +1,2087 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b0e11">
+<title>Yshippcommerce</title>
+<meta name="description" content="Sorteio gratuito do Yshippcommerce: Concorra a prêmios de forma totalmente gratuita">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:title" content="Sorteio dos 150 · Yshippcommerce">
+<meta property="og:description" content="Participação gratuita. Concorra a uma página do Facebook e a grupos. Reserve seu número de 1 a 150.">
+<meta name="twitter:card" content="summary">
+<script src="assets/js/public/theme-init.js"></script>
+<script src="assets/js/public/device-detection.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&family=Libre+Franklin:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<link rel="stylesheet" href="assets/css/public.css">
+<script src="assets/js/public/icons.js"></script>
+
+
+
+<!-- ════════════════════════════════════════════════════════════════════
+     YSHIPPCOMMERCE · DROPDOWN PROFISSIONAL (anti-menu-nativo)
+     Substitui TODOS os <select> nativos — os fixos do HTML e os que o
+     JavaScript cria depois — por um seletor customizado com o tema
+     escuro/dourado da plataforma. Nada mais precisa ser alterado.
+
+     COMO INSTALAR (no site E no painel de administração):
+     Cole este bloco INTEIRO logo antes de 
+</head> (ou antes do último
+     </script> do cabeçalho) nos dois arquivos. O componente:
+       · mantém o <select> original escondido (id, name, value e eventos
+         "change" continuam funcionando exatamente como antes);
+       · abre um menu próprio: fundo escuro, item dourado marcado com ✓,
+         rolagem, busca por digitação, teclado (setas, Enter, Esc) e
+         clique fora para fechar;
+       · acompanha o tema (claro/escuro) porque usa as mesmas variáveis
+         de cor do sistema;
+       · detecta selects criados depois pelo painel (observer de DOM).
+     ════════════════════════════════════════════════════════════════════ -->
+
+<script src="assets/js/public/form-state-compatibility.js"></script>
+</head>
+<body>
+
+<!-- TELA DE CARREGAMENTO (skeleton prateado): aparece enquanto o
+     Firebase carrega sorteios, eventos, prêmios e carteira -->
+<div id="bskel" aria-hidden="true">
+ <div class="bsk-top">
+  <div class="bsk-row">
+   <div class="bsk-brand"><div class="bsk bsk-logo"></div><div class="bsk bsk-line w45" style="height:14px"></div></div>
+   <div class="bsk-nav"><div class="bsk bsk-pill"></div><div class="bsk bsk-pill"></div><div class="bsk bsk-pill"></div><div class="bsk bsk-pill"></div></div>
+  </div>
+ </div>
+ <div class="bsk-w">
+  <div class="bsk-hero">
+   <div class="bsk-col">
+    <div class="bsk bsk-tagline"></div>
+    <div class="bsk bsk-line w90"></div>
+    <div class="bsk bsk-line w75"></div>
+    <div class="bsk bsk-line w60"></div>
+    <div class="bsk bsk-cta"></div>
+    <div class="bsk-count"><div class="bsk bsk-num"></div><div class="bsk bsk-num"></div><div class="bsk bsk-num"></div></div>
+   </div>
+   <div class="bsk-col"><div class="bsk bsk-ticket"></div></div>
+  </div>
+  <div class="bsk bsk-sec"></div>
+  <div class="bsk-cards">
+   <div class="bsk bsk-card"></div><div class="bsk bsk-card"></div><div class="bsk bsk-card"></div><div class="bsk bsk-card"></div>
+  </div>
+ </div>
+ <div class="bsk-note">Carregando o Yshippcommerce…</div>
+</div>
+
+<div class="promo" id="promo"><div class="wrap">
+ <span class="tag y">Cupom</span><span id="promo-t">10% de desconto no seguro.</span>
+</div></div>
+
+<header class="top" id="top"><div class="wrap bar">
+ <a class="brand" href="#top" aria-label="Yshippcommerce — início"><span class="mark">Y</span><span class="brand-t">Yshippcommerce<small>um grupo Yellowishipp</small></span></a>
+ <nav class="nav" id="nav" aria-label="Seções principais">
+  <a href="#premios">Prêmios</a><a href="#sorteios">Sorteios</a><a href="#resumo">Eventos</a><a href="#leiloes">Leilões</a><a href="#resultado">Resultado</a><a href="#cofre">Cofre Real</a>
+  <span class="acct" id="nav-centrais"><button class="acct-b" id="nc-btn" aria-haspopup="menu" aria-expanded="false"><span class="ava" aria-hidden="true"><i class=yi data-i=grid></i></span><span class="acct-n">Centrais</span><span class="acct-caret">▾</span></button>
+   <div class="acct-menu" id="nc-menu" role="menu" hidden>
+    <div class="am-head"><b>Centrais</b><span class="hint">Tudo em um só lugar</span></div>
+    <button class="am-item" id="nc-adc" role="menuitem"><span class="icn" aria-hidden="true"><i class=yi data-i=megaphone></i></span>Central de Anúncios</button>
+    <button class="am-item" id="nc-mn" role="menuitem"><span class="icn" aria-hidden="true"><i class=yi data-i=hammer></i></span>Mina de Reais</button>
+    <button class="am-item" id="nc-fj" role="menuitem"><span class="icn" aria-hidden="true"><i class=yi data-i=bolt></i></span>Forja de Buffs</button>
+    <button class="am-item" id="nc-evt" role="menuitem"><span class="icn" aria-hidden="true"><i class=yi data-i=calendar></i></span>Central de Eventos</button>
+    <button class="am-item" id="nc-vip" role="menuitem"><span class="icn" aria-hidden="true"><i class=yi data-i=star></i></span>Membros VIP</button>
+    <button class="am-item" id="nc-mkt" role="menuitem"><span class="icn" aria-hidden="true"><i class=yi data-i=cart></i></span>Yshippcommerce Market</button>
+    <button class="am-item" id="nc-wal" role="menuitem"><span class="icn" aria-hidden="true"><i class=yi data-i=coins></i></span>Carteira</button>
+    <button class="am-item" id="nc-clv" role="menuitem"><span class="icn" aria-hidden="true"><i class=yi data-i=handshake></i></span>Central do Colaborador</button>
+    <button class="am-item" id="nc-sup" role="menuitem"><span class="icn" aria-hidden="true"><i class=yi data-i=headset></i></span>Central de Ajuda</button>
+   </div>
+  </span>
+  <a href="#suporte" id="nav-sup-top">Ajuda</a>
+ </nav>
+ <span class="live off" id="live"><span class="dot" aria-hidden="true"></span><span id="live-t">Carregando</span></span>
+ <div class="acct" id="acct" hidden>
+  <div class="acct-menu" id="acct-menu" role="menu" hidden>
+   <div class="am-head"><b id="am-email">—</b><span class="hint" id="am-ver">—</span></div>
+   <button class="am-item" id="am-edit" role="menuitem"><span class="icn" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg></span>Meu perfil</button>
+   <button class="am-item" id="am-wallet" role="menuitem"><span class="icn" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="6" width="19" height="13" rx="3"/><path d="M2.5 10h19" opacity=".55"/><circle cx="17" cy="13.5" r="1.4" fill="currentColor" stroke="none"/></svg></span>Minha carteira</button>
+   <button class="am-item" id="am-ticket" role="menuitem"><span class="icn" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8a2 2 0 0 0 2-2h12a2 2 0 0 1 2 2v1a2.5 2.5 0 0 0 0 5v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1a2.5 2.5 0 0 0 0-5z"/><path d="M14.5 7v9.5" stroke-dasharray="2.5 3"/></svg></span>Meus números</button>
+   <button class="am-item out" id="am-logout" role="menuitem"><span class="icn" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h3"/><path d="m15 8 4 4-4 4M19 12H9"/></svg></span>Sair da conta</button>
+  </div>
+ </div>
+ <div class="bgrp">
+  <a class="hcta" href="#participar">Participar</a>
+  <button class="ib adh" id="adfloat" hidden aria-label="Carregar anúncio patrocinado" title="Carregar anúncio patrocinado">
+   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5v4l11.5 4.5V6z"/><path d="M14.5 9.5a3.5 3.5 0 0 1 0 5"/><path d="M17 7a7 7 0 0 1 0 10"/><path d="M6.5 15.5 8 20.5h2.5L9.4 16"/></svg>
+   <span class="adh-badge" id="ad-badge" hidden>+0</span>
+  </button>
+  <button class="ib" id="mkt-top" aria-label="Abrir o Yshippcommerce Market em tela cheia" title="Yshippcommerce Market">
+   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5.5 8.5h13l-1.1 11a1.8 1.8 0 0 1-1.8 1.6H8.4a1.8 1.8 0 0 1-1.8-1.6z"/><path d="M8.8 8.5V7a3.2 3.2 0 0 1 6.4 0v1.5"/></svg>
+  </button>
+  <button class="ib" id="menu" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu-sheet"><i></i><i></i><i></i></button>
+ </div>
+</div>
+<!-- ═══ GAVETA DE LOGIN · barra no topo, sempre visível sem usuário logado ═══ -->
+<div class="ldbar" id="ldbar" hidden>
+ <div class="wrap">
+  <span class="ld-step">Etapa 1 de 2</span>
+  <div class="ld-txt"><b>Sua participação começa aqui.</b><small>Entre ou crie sua conta. Depois, vamos orientar você nas próximas etapas.</small></div>
+  <div class="ld-act">
+   <button class="btn sm" id="ld-login" type="button">Entrar</button>
+   <button class="btn sm ghost" id="ld-register" type="button">Criar conta</button>
+  </div>
+ </div>
+</div>
+</header>
+
+<!-- ticker de estatísticas: barra ao vivo logo abaixo do cabeçalho -->
+<div class="tick"><div class="wrap" id="ticker"></div></div>
+
+<div class="hero-band"><div class="wrap hero">
+ <div id="hero-l">
+  <div class="slides" id="slides"></div>
+  <div class="hero-stats" id="hero-stats" hidden></div>
+  <div class="hero-ctl" id="hctl" hidden>
+   <button class="ib sm" id="hprev" aria-label="Item anterior">‹</button>
+   <div class="dots" id="dots"></div>
+   <button class="ib sm" id="hnext" aria-label="Próximo item">›</button>
+  </div>
+  <!-- estatísticas removidas do hero: cada assunto vive na sua própria gaveta -->
+ <!-- bloco do "Bilhete oficial" removido da interface: os bilhetes ficam na gaveta de Sorteios -->
+ </div>
+</div></div>
+
+<!-- capa em carrossel (posição: topo) — imagem definida no painel administrativo -->
+<div class="wrap"><div class="cvp" id="cvp-hero" hidden></div></div>
+
+
+<div class="wrap"><section id="como">
+ <div class="sec-head"><div class="sec-row"><h2>Como funciona</h2><div class="ev-nav"><button class="ib sm" data-info="info-como" aria-label="Como funciona o sistema">ⓘ</button><button class="ib sm" id="cprev" aria-label="Etapa anterior">‹</button><button class="ib sm" id="cnext" aria-label="Próxima etapa">›</button></div></div><p>Tudo começa nos eventos. Quatro etapas, todas gratuitas. Deslize para o lado.</p></div>
+ <p class="tipbox" id="info-como" hidden><b>O sistema em 30 segundos:</b> os <b>Eventos</b> são o centro de tudo — cada evento reúne tarefas, sorteios e leilões próprios. Para participar de um sorteio ou leilão, primeiro você paga a <b>entrada do evento</b> em reais. As <b>tarefas</b> rendem reais. Nos <b>sorteios</b>, os reais viram números (cada número custa o valor definido pelo organizador). Nos <b>leilões</b>, os reais viram lances: quem acumular mais até o prazo leva o prêmio — e se alguém atingir o valor total do produto, reivindica na hora. Prêmios são sempre vinculados ao próprio sorteio ou leilão. Antes de participar, leia os <button class="link" type="button" data-terms="1">termos de uso e responsabilidades</button> e <button class="link" type="button" data-consent="1">gerencie suas permissões</button> na Central de Ajuda.</p>
+ <div class="how" id="how">
+  <div class="card"><span class="n">1</span><h3>Identifique-se</h3><p>Crie sua conta gratuita e verifique seu e-mail. Leva menos de um minuto.</p></div>
+  <div class="card"><span class="n">2</span><h3>Ganhe reais</h3><p>Faça tarefas e acumule reais na sua carteira — o saldo principal é o real (R$), com bilhetes, moedas e diamantes para as fichas.</p></div>
+  <div class="card"><span class="n">3</span><h3>Confirme o evento</h3><p>Pague a entrada do evento em reais e libere os sorteios e leilões dele.</p></div>
+  <div class="card"><span class="n">4</span><h3>Sorteie ou arremate</h3><p>Use seu saldo em reais para escolher números do sorteio ou dar lances no leilão.</p></div>
+ </div>
+</section></div>
+
+<div class="wrap"><section id="premios" class="sec-top">
+ <div class="sec-head"><div class="sec-row"><h2>Prêmios em jogo</h2><span class="tag g">Ao vivo</span></div><p id="pz-sub"></p></div>
+ <div class="cvp" id="cvp-premios" hidden></div>
+ <div class="pzc" id="pzc" aria-roledescription="carrossel" aria-label="Prêmios em destaque"></div>
+ <div class="pz-total" id="pz-total" hidden></div>
+</section></div>
+
+
+
+<!-- ════════════════════════════════════════════════════════════
+     ANÚNCIO 1 · ADSTERRA / MONETAG — topo da página
+     Cole o código do banner aqui (sugestão: 728x90 ou responsivo).
+     Adsterra: painel > Websites > Ad Units > copiar código do banner.
+     Monetag: painel > copiar código do formato desejado.
+     Depois de colar o código, apague a div "ad-placeholder" abaixo.
+     ════════════════════════════════════════════════════════════ -->
+<div class="wrap"><div class="ad-slot" id="ad-slot-1">
+ <span class="ad-label">Publicidade</span>
+ <div class="ad-box">
+  <!-- ▼▼▼ COLE O CÓDIGO DO ANÚNCIO 1 AQUI (Adsterra/Monetag) ▼▼▼ -->
+  <div class="ad-placeholder"><b>Banner de anúncio 1</b><br>728×90 · cole aqui o código Adsterra / Monetag</div>
+  <!-- ▲▲▲ COLE O CÓDIGO DO ANÚNCIO 1 ACIMA ▲▲▲ -->
+ </div>
+</div></div>
+
+<main class="wrap">
+
+<section id="resumo" class="event-summary">
+
+    <div class="sec-head">
+        <div class="sec-row">
+            <h2>Central de oportunidades</h2>
+        </div>
+        <p>
+            Acesse competições, atividades e ferramentas profissionais
+            disponíveis na plataforma.
+        </p>
+    </div>
+
+    <div class="resumo-groups">
+
+        
+        <!-- COMPETIÇÕES -->
+        <div class="resumo-group">
+
+            <div class="resumo-group-head">
+                <div class="group-title-area">
+                    <span class="group-icon competition-icon">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4Z"/>
+                            <path d="M7 6H4v2a4 4 0 0 0 4 4M17 6h3v2a4 4 0 0 1-4 4"/>
+                            <path d="m12 7 1.1 2.2 2.4.3-1.75 1.7.4 2.4L12 12.5l-2.15 1.1.4-2.4-1.75-1.7 2.4-.3L12 7Z"/>
+                        </svg>
+                    </span>
+
+                    <div>
+                        <h3>Competições</h3>
+                        <p>Sorteios e disputas disponíveis na plataforma.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="carousel-hint">
+                <span class="carousel-hint-icon">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M5 12h14M13 6l6 6-6 6M11 6l-6 6 6 6"/>
+                    </svg>
+                </span>
+                <span>DESLIZE PARA EXPLORAR</span>
+                <span class="carousel-hint-line"></span>
+            </div>
+
+            <div class="resumo-carousel">
+
+                <div class="card evc res-card" data-evtopen="1"
+                     aria-label="Abrir a Central de Eventos">
+
+                    <span class="tag g">
+                        <svg class="card-icon" viewBox="0 0 24 24" aria-hidden="true">
+                            <rect x="3.5" y="4.5" width="17" height="16" rx="2.5"/>
+                            <path d="M8 3v4M16 3v4M3.5 10h17M8 14h3"/>
+                        </svg>
+                        Eventos
+                    </span>
+
+                    <b class="res-num">
+                        <svg class="central-icon" viewBox="0 0 24 24" aria-hidden="true">
+                            <rect x="3.5" y="4.5" width="17" height="16" rx="2.5"/>
+                            <path d="M8 3v4M16 3v4M3.5 10h17M8 14h3"/>
+                        </svg>
+                    </b>
+                    <small class="hint">O centro da plataforma</small>
+                    <p class="hint res-description">Cada evento reúne suas tarefas, seus sorteios e seus leilões. Confirme a entrada e participe de tudo dele.</p>
+
+                    <button class="btn sm" type="button" data-evtopen="1">
+                        Central de Eventos
+                        <span aria-hidden="true">→</span>
+                    </button>
+                </div>
+
+                <div class="card evc res-card" data-sg="1"
+                     aria-label="Abrir a tela de sorteios">
+
+                    <span class="tag g">
+                        <svg class="card-icon" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M20 12v10H4V12M2 7h20v5H2z"/>
+                            <path d="M12 22V7M12 7H7.5a2.5 2.5 0 1 1 2.5-2.5V7ZM12 7h4.5A2.5 2.5 0 1 0 14 4.5V7Z"/>
+                        </svg>
+                        Sorteios
+                    </span>
+
+                    <b class="res-num" id="res-sg-open">0</b>
+                    <small class="hint">Abertos agora</small>
+                    <p class="hint res-description" id="res-sg-sub">—</p>
+
+                    <button class="btn sm" type="button" data-sg="1">
+                        Acessar sorteios
+                        <span aria-hidden="true">→</span>
+                    </button>
+                </div>
+
+                <div class="card evc res-card" data-lg="1"
+                     aria-label="Abrir a tela de leilões">
+
+                    <span class="tag g">
+                        <svg class="card-icon" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="m14 4 6 6M12 6l6 6M3 21l9-9M8 3l13 13M3 8l5-5"/>
+                            <path d="m14 14 5 5M3 21h18"/>
+                        </svg>
+                        Leilões
+                    </span>
+
+                    <b class="res-num" id="res-lg-open">0</b>
+                    <small class="hint">Abertos agora</small>
+                    <p class="hint res-description" id="res-lg-sub">—</p>
+
+                    <button class="btn sm" type="button" data-lg="1">
+                        Acessar leilões
+                        <span aria-hidden="true">→</span>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- OPORTUNIDADES -->
+        <div class="resumo-group">
+
+            <div class="resumo-group-head">
+                <div class="group-title-area">
+                    <span class="group-icon opportunity-icon">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M12 3v3M12 18v3M3 12h3M18 12h3"/>
+                            <path d="m5.64 5.64 2.12 2.12m8.48 8.48 2.12 2.12m0-12.72-2.12 2.12m-8.48 8.48-2.12 2.12"/>
+                            <circle cx="12" cy="12" r="5"/>
+                            <path d="m10 12 1.5 1.5L14.5 10"/>
+                        </svg>
+                    </span>
+
+                    <div>
+                        <h3>Oportunidades</h3>
+                        <p>Atividades e tarefas para participação e ganhos.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="carousel-hint">
+                <span class="carousel-hint-icon">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M5 12h14M13 6l6 6-6 6M11 6l-6 6 6 6"/>
+                    </svg>
+                </span>
+                <span>DESLIZE PARA EXPLORAR</span>
+                <span class="carousel-hint-line"></span>
+            </div>
+
+            <div class="resumo-carousel">
+
+                <div class="card evc res-card" data-of="1"
+                     aria-label="Abrir tarefas YshippCommerce">
+
+                    <span class="tag y">
+                        <svg class="card-icon" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M9 11l2 2 4-4"/>
+                            <path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8"/>
+                            <path d="M16 3h5v5M21 3l-9 9"/>
+                        </svg>
+                        Tarefas YshippCommerce
+                    </span>
+
+                    <b class="res-num" id="res-tk-open">0</b>
+                    <small class="hint">Oficiais ativas agora</small>
+                    <span class="tag g" id="res-of-n">—</span>
+                    <p class="hint res-description" id="res-tk-sub">—</p>
+
+                    <button class="btn sm" type="button" data-of="1">
+                        Acessar tarefas
+                        <span aria-hidden="true">→</span>
+                    </button>
+                </div>
+
+                <div class="card evc res-card" data-cof="1"
+                     aria-label="Abrir tarefas de colaboradores">
+
+                    <span class="tag b">
+                        <svg class="card-icon" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                            <circle cx="10" cy="7" r="4"/>
+                            <path d="M20 8v6M17 11h6"/>
+                        </svg>
+                        Tarefas de colaboradores
+                    </span>
+
+                    <b class="res-num" id="res-cof-open">0</b>
+                    <small class="hint">De parceiros no ar</small>
+                    <span class="tag b" id="res-cof-n">—</span>
+                    <p class="hint res-description" id="res-cof-sub">—</p>
+
+                    <button class="btn sm" type="button" data-cof="1">
+                        Acessar tarefas
+                        <span aria-hidden="true">→</span>
+                    </button>
+                </div>
+
+                <div class="card evc res-card" data-cofire="1"
+                     aria-label="Abrir o Cofre Real em tela cheia">
+
+                    <span class="tag y">
+                        <svg class="card-icon" viewBox="0 0 24 24" aria-hidden="true">
+                            <rect x="3.5" y="5" width="17" height="15" rx="2.5"/>
+                            <circle cx="12" cy="12.5" r="3.5"/>
+                            <path d="M12 9v-2M8 20v1.5M16 20v1.5"/>
+                        </svg>
+                        Cofre Real
+                    </span>
+
+                    <small class="hint">Sorteio mensal · 1 a 1000 · grátis</small>
+                    <p class="hint res-description">Todas as taxas de publicação (30%) pagas pelos colaboradores entram no cofre. No fim do mês um número de 1 a 1000 é sorteado: se for o seu, o valor acumulado é seu. Ninguém acertou? Acumula para o mês seguinte.</p>
+                    <div class="res-cof-live" style="display:flex;gap:10px;flex-wrap:wrap;align-items:baseline">
+                        <b class="mono" id="cfrep-pot" style="font-size:18px;color:var(--acx)">—</b>
+                        <span class="hint" id="cfrep-count">—</span>
+                        <span class="hint" id="cfrep-my">—</span>
+                    </div>
+
+                    <button class="btn sm" type="button" data-cofire="1">
+                        Abrir em tela cheia
+                        <span aria-hidden="true">→</span>
+                    </button>
+                </div>
+
+                <div class="card evc res-card" data-anun="1"
+                     aria-label="Abrir a Central de Anúncios em tela cheia">
+
+                    <span class="tag y">
+                        <svg class="card-icon" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M3 11v2M21 8v8M6 7v10h9V7zM6 12H4M15 9l6-2v10l-6-2"/>
+                        </svg>
+                        Central de Anúncios
+                    </span>
+
+                    <small class="hint">Anuncie para a comunidade e fature com afiliados</small>
+                    <div style="display:flex;gap:6px;flex-wrap:wrap">
+                        <span class="tag y" id="resadc-n">—</span>
+                        <span class="tag" id="resadc-pool">—</span>
+                    </div>
+                    <p class="hint res-description">Banners, links e vídeos em rotação paga · ferramentas profissionais de monetização · programa de afiliados: indique e ganhe reais. Todo real pago em anúncio vira prêmio nos sorteios.</p>
+
+                    <button class="btn sm" type="button" data-anun="1">
+                        Abrir em tela cheia
+                        <span aria-hidden="true">→</span>
+                    </button>
+                </div>
+
+                <div class="card evc res-card" data-pesq="1"
+                     aria-label="Abrir a Central de Pesquisas Pagas em tela cheia">
+
+                    <span class="tag g">
+                        <svg class="card-icon" viewBox="0 0 24 24" aria-hidden="true">
+                            <circle cx="10.5" cy="10.5" r="6.5"/>
+                            <path d="M15.5 15.5 21 21M8 10.5h5M10.5 8v5"/>
+                        </svg>
+                        Pesquisas pagas
+                    </span>
+
+                    <small class="hint">Pesquisas rápidas de parceiros · participação voluntária</small>
+                    <div style="display:flex;gap:6px;flex-wrap:wrap">
+                        <span class="tag g" id="resp-n">—</span>
+                        <span class="tag" id="resp-pot">—</span>
+                    </div>
+                    <div style="display:flex;gap:6px;flex-wrap:wrap">
+                        <span class="tag" id="resp-me">—</span>
+                        <span class="tag g" id="resp-earn">—</span>
+                    </div>
+                    <p class="hint res-description">Responda pesquisas de parceiros e ganhe reais na hora. Acompanhe quantas estão no ar, quantas você já respondeu e o total ganho — tudo em tela cheia.</p>
+
+                    <button class="btn sm" type="button" data-pesq="1">
+                        Abrir em tela cheia
+                        <span aria-hidden="true">→</span>
+                    </button>
+                </div>
+
+                <div class="card evc res-card" data-vipopen="1"
+                     aria-label="Abrir a Central de Membros VIP">
+
+                    <span class="tag y">
+                        <svg class="card-icon" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M12 2.8 14.6 8l5.7.8-4.1 4 1 5.7-5.2-2.7-5.2 2.7 1-5.7-4.1-4L9.4 8Z"/>
+                        </svg>
+                        Membros VIP
+                    </span>
+
+                    <b class="res-num">★</b>
+                    <small class="hint">Dedicação diária com prêmio</small>
+                    <div style="display:flex;gap:6px;flex-wrap:wrap">
+                        <span class="tag y">Check-in diário</span>
+                        <span class="tag">5 tarefas/dia · 7 dias</span>
+                        <span class="tag g">Fatia do caixa VIP</span>
+                    </div>
+
+                    <p class="hint res-description">
+                        Faça check-in e 5 tarefas por dia, 7 dias seguidos, e entre no clube: fatia do caixa VIP (taxa das compras de cripto), selo dourado, check-in em dobro e fila prioritária nos saques.
+                    </p>
+
+                    <button class="btn sm" type="button" data-vipopen="1">
+                        Entrar na Central
+                        <span aria-hidden="true">→</span>
+                    </button>
+                </div>
+
+                <div class="card evc res-card" data-apphub="1"
+                     aria-label="Abrir o Yshipp AppHub">
+
+                    <span class="tag y">
+                        <svg class="card-icon" viewBox="0 0 24 24" aria-hidden="true">
+                            <rect x="7.5" y="3" width="9" height="18" rx="2"/>
+                            <path d="M11 18h2"/>
+                        </svg>
+                        Yshipp AppHub
+                    </span>
+
+                    <b class="res-num" id="res-ah-open">0</b>
+                    <small class="hint">Apps parceiros no ar</small>
+
+                    <p class="hint res-description">
+                        Instale aplicativos selecionados pela central, complete atividades dentro deles mediante prova e ganhe reais, bilhetes, moedas, diamantes — além de pacotes, mineração e buffs.
+                    </p>
+
+                    <button class="btn sm" type="button" data-apphub="1">
+                        Abrir o AppHub
+                        <span aria-hidden="true">→</span>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- ÁREA PROFISSIONAL -->
+        <div class="resumo-group">
+
+            <div class="resumo-group-head">
+                <div class="group-title-area">
+                    <span class="group-icon professional-icon">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <rect x="3" y="7" width="18" height="14" rx="2"/>
+                            <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 12h18M10 12v2h4v-2"/>
+                        </svg>
+                    </span>
+
+                    <div>
+                        <h3>Área profissional</h3>
+                        <p>Ferramentas para administrar suas parcerias.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="carousel-hint">
+                <span class="carousel-hint-icon">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M5 12h14M13 6l6 6-6 6M11 6l-6 6 6 6"/>
+                    </svg>
+                </span>
+                <span>DESLIZE PARA EXPLORAR</span>
+                <span class="carousel-hint-line"></span>
+            </div>
+
+            <div class="resumo-carousel">
+
+                <div class="card evc res-card" data-clv="1"
+                     aria-label="Abrir a Central do colaborador">
+
+                    <span class="tag b">
+                        <svg class="card-icon" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                            <circle cx="10" cy="7" r="4"/>
+                            <path d="m16 11 2 2 4-4"/>
+                        </svg>
+                        Central do colaborador
+                    </span>
+
+                    <b class="res-num">
+                        <svg class="central-icon" viewBox="0 0 24 24" aria-hidden="true">
+                            <rect x="3" y="3" width="18" height="18" rx="4"/>
+                            <path d="M8 12h8M12 8v8"/>
+                        </svg>
+                    </b>
+
+                    <small class="hint">Sua central de parcerias</small>
+
+                    <p class="hint res-description">
+                        Anuncie ofertas e inspecione as provas dos participantes.
+                    </p>
+
+                    <button class="btn sm" type="button" data-clv="1">
+                        Acessar central
+                        <span aria-hidden="true">→</span>
+                    </button>
+                </div>
+
+                <div class="card evc res-card" data-affopen="1"
+                     aria-label="Abrir a Central de Engajamento Coletivo">
+
+                    <span class="tag b">
+                        <svg class="card-icon" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+                        </svg>
+                        Central de Engajamento Coletivo
+                    </span>
+
+                    <b class="res-num">🤝</b>
+
+                    <small class="hint">Grupos colaborativos em fila</small>
+
+                    <p class="hint res-description">
+                        Grupos por categoria e subcategoria (Facebook, Instagram, TikTok, YouTube, Sites): fila inteligente, rodadas diárias e participação equilibrada para todos.
+                    </p>
+
+                    <button class="btn sm" type="button" data-affopen="1">
+                        Entrar na Central
+                        <span aria-hidden="true">→</span>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- CLUBE DE MEMBROS -->
+        <div class="resumo-group">
+
+            <div class="resumo-group-head">
+                <div class="group-title-area">
+                    <span class="group-icon vip-icon">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M3 8l4 3 5-6 5 6 4-3-1.5 10h-15L3 8Z"/>
+                            <path d="M5.5 18h13"/>
+                        </svg>
+                    </span>
+
+                    <div>
+                        <h3>Clube de Membros</h3>
+                        <p>Recursos exclusivos para membros dedicados.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="carousel-hint">
+                <span class="carousel-hint-icon">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M5 12h14M13 6l6 6-6 6M11 6l-6 6 6 6"/>
+                    </svg>
+                </span>
+                <span>DESLIZE PARA EXPLORAR</span>
+                <span class="carousel-hint-line"></span>
+            </div>
+
+            <div class="resumo-carousel">
+
+                <div class="card evc res-card" data-cardid="clube-vip">
+                    <span class="tag y">
+                        <svg class="card-icon" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M12 3l2.5 5 5.5.8-4 3.9.9 5.5-4.9-2.6-4.9 2.6.9-5.5-4-3.9 5.5-.8L12 3Z"/>
+                        </svg>
+                        Membros VIP
+                    </span>
+                    <small class="hint">Clube de dedicação diária</small>
+                    <p class="hint res-description">Entre no clube: faça check-in e complete 5 tarefas por dia, 7 dias seguidos, e receba fatia do caixa VIP (taxa das compras de cripto), bônus exclusivos e prioridade na fila.</p>
+                    <button class="btn sm" type="button" data-vipopen="1">Abrir em tela cheia <span aria-hidden="true">→</span></button>
+                </div>
+
+                <div class="card evc res-card" data-cardid="clube-checkin">
+                    <span class="tag g">
+                        <svg class="card-icon" viewBox="0 0 24 24" aria-hidden="true">
+                            <rect x="3.5" y="4.5" width="17" height="16" rx="2.5"/>
+                            <path d="M8 3v4M16 3v4M3.5 10h17M9 15l2 2 4-4"/>
+                        </svg>
+                        Check-in diário
+                    </span>
+                    <small class="hint">Sua constância vale prêmio</small>
+                    <p class="hint res-description">Registre o check-in todos os dias e mantenha a sequência: a dedicação diária é o que garante sua fatia do caixa VIP no fim da semana.</p>
+                    <button class="btn sm" type="button" data-vipck="1">Fazer check-in <span aria-hidden="true">→</span></button>
+                </div>
+
+                <div class="card evc res-card" data-caixa="1" data-cardid="clube-caixa">
+                    <span class="tag y">
+                        <svg class="card-icon" viewBox="0 0 24 24" aria-hidden="true">
+                            <rect x="3.5" y="6" width="17" height="13" rx="2.5"/>
+                            <path d="M3.5 10h17M12 6v13"/>
+                        </svg>
+                        Caixa da Comunidade
+                    </span>
+                    <small class="hint">Sorteio mensal independente do VIP</small>
+                    <p class="hint res-description">Um caixa à parte do clube VIP. Cresce com pedidos de profissionais oficiais e anúncios de membros. Quem fez pelo menos 1 tarefa aprovada no mês escolhe um número e concorre ao pote.</p>
+                    <button class="btn sm" type="button" data-caixa="1">Abrir a caixa <span aria-hidden="true">→</span></button>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- PROFISSIONAIS & SERVIÇOS -->
+        <div class="resumo-group">
+
+            <div class="resumo-group-head">
+                <div class="group-title-area">
+                    <span class="group-icon professional-icon">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                            <circle cx="10" cy="7" r="4"/>
+                            <path d="m16 11 2 2 4-4"/>
+                        </svg>
+                    </span>
+
+                    <div>
+                        <h3>Profissionais &amp; Serviços</h3>
+                        <p>Contrate ou ofereça serviços dentro da comunidade.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="carousel-hint">
+                <span class="carousel-hint-icon">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M5 12h14M13 6l6 6-6 6M11 6l-6 6 6 6"/>
+                    </svg>
+                </span>
+                <span>DESLIZE PARA EXPLORAR</span>
+                <span class="carousel-hint-line"></span>
+            </div>
+
+            <div class="resumo-carousel">
+
+                <div class="card evc res-card" data-pros="1" data-cardid="srv-contratar">
+                    <span class="tag y">
+                        <svg class="card-icon" viewBox="0 0 24 24" aria-hidden="true">
+                            <circle cx="10.5" cy="10.5" r="6.5"/>
+                            <path d="M15.5 15.5 21 21"/>
+                        </svg>
+                        Contrate um profissional
+                    </span>
+                    <b class="res-num" id="res-pros-n">0</b>
+                    <small class="hint">Gigs oficiais no ar</small>
+                    <p class="hint res-description">Gigs publicados pela equipe Yshippcommerce: design, sites, reels, tráfego e outros serviços de profissionais com renome, escolhidos no painel.</p>
+                    <button class="btn sm" type="button" data-pros="1">Ver profissionais <span aria-hidden="true">→</span></button>
+                </div>
+
+                <div class="card evc res-card" data-offer-svc="1" data-cardid="srv-oferecer">
+                    <span class="tag b">
+                        <svg class="card-icon" viewBox="0 0 24 24" aria-hidden="true">
+                            <rect x="3" y="7" width="18" height="14" rx="2"/>
+                            <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 12h18"/>
+                        </svg>
+                        Ofereça seu serviço
+                    </span>
+                    <small class="hint">Transforme sua habilidade em reais</small>
+                    <p class="hint res-description">Publique o serviço que você entrega e receba pedidos da comunidade. Passe pela revisão da equipe e apareça para quem está contratando.</p>
+                    <button class="btn sm" type="button" data-offer-svc="1">Publicar serviço <span aria-hidden="true">→</span></button>
+                </div>
+
+                <div class="card evc res-card" data-svc-ads="1" data-cardid="srv-divulgar">
+                    <span class="tag y">
+                        <svg class="card-icon" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M3 11v2M21 8v8M6 7v10h9V7zM6 12H4M15 9l6-2v10l-6-2"/>
+                        </svg>
+                        Divulgue para a comunidade
+                    </span>
+                    <small class="hint">Anuncie o serviço que você oferece</small>
+                    <p class="hint res-description">Central só para quem já tem o perfil de prestador aprovado. Coloque o seu serviço em destaque para a comunidade — a equipe revisa antes de ir ao ar.</p>
+                    <button class="btn sm" type="button" data-svc-ads="1">Anúncios de serviços <span aria-hidden="true">→</span></button>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</section>
+
+
+
+
+<!-- ═══ GAVETA DE SORTEIOS · tela cheia, desce até logo abaixo do cabeçalho ═══ -->
+<div class="gaveta" id="sgaveta" role="dialog" aria-modal="true" aria-label="Sorteios">
+ <div class="gav" id="sgav">
+  <div class="gv-top">
+   <span class="gv-ico" aria-hidden="true"><i class=yi data-i=ticket></i></span>
+   <div><b>Sorteios</b><small>TUDO SOBRE SORTEIOS · NÚMEROS, PRÊMIOS E PARTICIPAÇÃO</small></div>
+   <button class="ib sm" type="button" id="sg-x" aria-label="Fechar sorteios">✕</button>
+  </div>
+  <div class="gv-scroll">
+<section id="sorteios">
+ <div class="sec-head"><div class="sec-row"><h2>Sorteios</h2><div class="ev-nav"><button class="ib sm" data-info="info-sorteio" aria-label="Como funcionam os sorteios">ⓘ</button><button class="ib sm" id="sdprev" aria-label="Sorteio anterior">‹</button><button class="ib sm" id="sdnext" aria-label="Próximo sorteio">›</button></div></div><p id="sd-intro">Aqui ficam <b>todos os sorteios</b> da aba escolhida, em carrossel. Toque em <b>"Escolher meu número"</b> e toda a participação (conta, tarefas e escolha do número) acontece aqui mesmo, sem sair desta seção.</p></div>
+ <p class="tipbox" id="info-sorteio" hidden><b>Como participar de um sorteio:</b> 1) Entre na sua conta e complete o perfil. 2) Faça tarefas para ganhar reais (R$). 3) Se o sorteio pertence a um evento, confirme a entrada do evento. 4) Toque em <b>"Escolher meu número"</b> no sorteio desejado e reserve com seu saldo em reais. O resultado é publicado na seção "Resultado oficial".</p>
+ <div class="tabs tabs3" id="sdtabs" style="max-width:360px;margin-bottom:14px"><button data-v="active" class="on">Ativos</button><button data-v="future">Futuros</button><button data-v="ended">Encerrados</button></div>
+ <div class="cvp" id="cvp-sorteios" hidden></div>
+ <div class="evs" id="sdraws"></div>
+
+ <!-- ═══ PARTICIPAÇÃO NO PRÓPRIO SORTEIO: o botão "Escolher meu número" abre esta área aqui mesmo, sem descer a página ═══ -->
+ <div class="sd-stage" id="participar" hidden>
+  <div class="sd-stage-h">
+   <button class="btn sm" id="sd-back" type="button" aria-label="Voltar para a lista de sorteios" style="box-shadow:0 0 0 3px var(--as)">‹ Voltar aos sorteios</button>
+   <div class="sd-stage-t"><span class="label">Participando de</span><b id="sd-stage-name">Sorteio</b></div>
+  </div>
+  <ol class="steps" id="prog"></ol>
+  <div class="sd-grid">
+   <div class="card assist">
+    <div class="as-top"><span class="tag y" id="as-tag">Assistente</span></div>
+    <div aria-live="polite">
+     <h3 id="as-h">Sua participação começa aqui.</h3>
+     <p id="as-t"></p>
+    </div>
+
+    <div class="panel" id="p-auth" hidden>
+     <div class="notice" id="inapp" hidden>Você está no navegador de um aplicativo (Facebook/Instagram). O login com Google pode ser bloqueado aqui. Se isso acontecer, abra esta página no Chrome ou Safari, ou entre com e-mail e senha.</div>
+     <div class="tabs" id="tabs"><button data-m="login">Entrar</button><button data-m="register">Criar conta</button></div>
+     <div class="field"><label class="label" for="email">E-mail</label><input id="email" type="email" autocomplete="email" placeholder="seuemail@exemplo.com"></div>
+     <div class="field" id="pw-f"><label class="label" for="password">Senha</label>
+      <div class="pw"><input id="password" type="password" autocomplete="current-password" placeholder="Sua senha"><button class="btn sm ghost" id="showpw" type="button">Mostrar</button></div>
+     </div>
+     <div class="actions" style="justify-content:space-between"><button class="btn" id="go">Entrar</button><button class="link" id="forgot" type="button">Esqueci minha senha</button></div>
+     <div class="or" id="or">ou</div>
+     <div class="lg-soc" id="auth-soc">
+     <button class="soc s-g" id="google" type="button"><i aria-hidden="true">G</i>Continuar com Google</button>
+     <button class="soc s-f" id="facebook" type="button"><i aria-hidden="true">f</i>Continuar com Facebook</button>
+     <button class="soc s-t" id="tiktok" type="button"><i aria-hidden="true"><i class=yi data-i=music></i></i>Continuar com TikTok</button>
+    </div>
+     <p class="hint" style="margin-top:12px">Ao continuar, você concorda com os <button class="link" type="button" data-terms="1">termos de uso e responsabilidades</button> e com o uso do seu nome apenas para operar o sorteio.</p>
+     <p class="status" id="amsg"></p>
+    </div>
+
+    <!-- o login/cadastro agora SEMPRE abrem a gaveta em tela cheia (#login-gaveta) —
+         este painel (p-auth) fica oculto: nada de formulário solto na interface principal -->
+    <div class="panel" id="p-auth-cta" hidden>
+     <p class="hint">Para participar, entre na sua conta ou crie uma conta gratuita — leva menos de um minuto e abre em tela cheia.</p>
+     <div class="actions" style="justify-content:center;margin-top:10px"><button class="btn" id="cta-login" type="button">Entrar</button><button class="btn ghost" id="cta-register" type="button">Criar conta</button></div>
+    </div>
+
+    <div class="panel" id="p-verify" hidden>
+     <div class="v-hero">
+      <span class="v-ico" aria-hidden="true"><svg viewBox="0 0 48 48" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="10" width="38" height="28" rx="4"/><path d="m6 13 18 13L42 13" opacity=".9"/><path d="M10 38l9-9M38 38l-9-9" opacity=".35" stroke-width="1.6"/></svg></span>
+      <h4 style="font-size:17px">Confirme seu e-mail</h4>
+      <p class="hint" style="max-width:46ch">Enviamos um link de verificação. Siga os três passos abaixo — esta tela detecta a confirmação sozinha, sem precisar recarregar.</p>
+      <span class="v-mail" id="v-mail">—</span>
+      <div class="v-steps" role="list">
+       <span class="v-step" role="listitem"><i aria-hidden="true">1</i><small>Abra o e-mail <b>"Verifique seu e-mail"</b> que enviamos</small></span>
+       <span class="v-step" role="listitem"><i aria-hidden="true">2</i><small>Toque no <b>link de confirmação</b> dentro da mensagem</small></span>
+       <span class="v-step" role="listitem"><i aria-hidden="true">3</i><small>Volte a esta tela — ela libera o acesso automaticamente</small></span>
+      </div>
+      <span class="v-wait">Aguardando confirmação…</span>
+     </div>
+     <div class="actions" style="justify-content:center"><button class="btn" id="check-verification">Já toquei no link</button><button class="btn ghost" id="resend">Reenviar e-mail</button></div>
+     <p class="hint" style="margin-top:10px;text-align:center">Não achou? Procure na caixa de spam ou na pasta de promoções. Confira se digitou o e-mail certo. O link expira em algumas horas — se vencer, use "Reenviar e-mail".</p>
+    </div>
+
+    <div class="panel" id="p-profile" hidden>
+     <div class="field"><label class="label" for="fbname">Nome completo</label><input id="fbname" maxlength="60" placeholder="Ex.: Maria Souza" autocomplete="name"></div>
+     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px" class="pgrid">
+      <div class="field" style="margin-top:14px"><label class="label" for="birth">Data de nascimento</label><input id="birth" type="date" max="2026-12-31"></div>
+      <div class="field" style="margin-top:14px"><label class="label" for="gender">Gênero</label>
+       <select id="gender" style="width:100%;padding:12px 14px;background:var(--p2);border:1px solid var(--l);border-radius:8px;color:var(--ink);font-size:14.5px">
+        <option value="">Prefiro não informar</option><option>Feminino</option><option>Masculino</option><option>Outro</option>
+       </select>
+      </div>
+     </div>
+     <div class="field"><label class="label" for="pix">Chave Pix (para contato em caso de prêmio)</label><input id="pix" maxlength="120" placeholder="CPF, e-mail, telefone ou aleatória"></div>
+     <div class="field" style="margin-top:14px"><label class="label" for="street">Rua (endereço para entrega de prêmios)</label><input id="street" maxlength="120" placeholder="Ex.: Rua das Palmeiras" autocomplete="street-address"></div>
+     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px" class="pgrid">
+      <div class="field" style="margin-top:14px"><label class="label" for="housenum">Número da casa</label><input id="housenum" maxlength="12" placeholder="Ex.: 123" inputmode="numeric"></div>
+      <div class="field" style="margin-top:14px"><label class="label" for="compl">Complemento (opcional)</label><input id="compl" maxlength="60" placeholder="Ex.: Apto 42, Bloco B"></div>
+     </div>
+     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px" class="pgrid">
+      <div class="field" style="margin-top:14px"><label class="label" for="uf">Estado</label>
+       <select id="uf" style="width:100%;padding:12px 14px;background:var(--p2);border:1px solid var(--l);border-radius:8px;color:var(--ink);font-size:14.5px">
+        <option value="">Selecione…</option>
+        <option>AC</option><option>AL</option><option>AP</option><option>AM</option><option>BA</option><option>CE</option><option>DF</option><option>ES</option><option>GO</option><option>MA</option><option>MT</option><option>MS</option><option>MG</option><option>PA</option><option>PB</option><option>PR</option><option>PE</option><option>PI</option><option>RJ</option><option>RN</option><option>RS</option><option>RO</option><option>RR</option><option>SC</option><option>SP</option><option>SE</option><option>TO</option><option>Outro</option>
+       </select>
+      </div>
+      <div class="field" style="margin-top:14px"><label class="label" for="country">País</label>
+       <select id="country" style="width:100%;padding:12px 14px;background:var(--p2);border:1px solid var(--l);border-radius:8px;color:var(--ink);font-size:14.5px">
+        <option value="">Selecione…</option>
+        <option selected>Brasil</option><option>Argentina</option><option>Chile</option><option>Colômbia</option><option>Espanha</option><option>Estados Unidos</option><option>França</option><option>Itália</option><option>México</option><option>Portugal</option><option>Reino Unido</option><option>Uruguai</option><option>Outro</option>
+       </select>
+      </div>
+     </div>
+     <div class="field"><label class="label" for="whatsapp">WhatsApp (com DDD, para contato em caso de prêmio)</label><input id="whatsapp" type="tel" maxlength="20" placeholder="Ex.: (11) 98765-4321" autocomplete="tel-national"></div>
+     <p class="hint" style="margin-top:8px">Só o organizador vê esses dados. Na lista pública você aparece abreviado (ex.: Maria S.).</p>
+     <div class="field" id="pw-conf" hidden><label class="label" for="reauth">Confirme sua senha para salvar as alterações</label>
+      <div class="pw"><input id="reauth" type="password" autocomplete="current-password" placeholder="Sua senha atual"><button class="btn sm ghost" id="showreauth" type="button">Mostrar</button></div>
+      <p class="hint" style="margin-top:6px">Alterar seus dados exige a senha da conta — é uma proteção extra para você. Esqueceu a senha? Use o botão abaixo para receber um link de redefinição no seu e-mail.</p>
+      <div class="actions" style="margin:0"><button class="btn ghost sm" id="forgot-in-profile" type="button">Esqueci minha senha — enviar link por e-mail</button></div>
+     </div>
+     <div class="actions"><button class="btn wide" id="save-profile">Salvar e continuar</button><span class="status" id="pstat" style="margin:0"></span></div>
+     <!-- ═══ MAIS OPÇÕES DE ENTRADA · conecte Google, Facebook e TikTok na conta ═══ -->
+     <div class="card" style="margin-top:18px;padding:14px;display:grid;gap:8px;border:1px solid var(--ac);background:var(--as)">
+      <b style="font-size:13.5px">Mais opções de entrada</b>
+      <p class="hint">Conecte outras formas de entrar na sua conta. Se um dia você esquecer a senha, entra por qualquer uma das conexões abaixo.</p>
+      <div id="link-accounts" style="display:grid;gap:8px;margin-top:4px"></div>
+     </div>
+    </div>
+
+    <div class="panel" id="p-event" hidden>
+     <p class="hint">Este sorteio faz parte de um evento. Confirme sua participação na campanha para liberar a escolha dos números.</p>
+     <div id="ev-card"></div>
+    </div>
+
+    <div class="panel" id="p-task" hidden>
+     <p class="hint" id="task-hint">Cada tarefa concluída e aprovada credita reais (R$) na sua carteira. Escolha a categoria, envie o comprovante e aguarde a análise do organizador.</p>
+     <div id="tasks-list"></div>
+    </div>
+
+    <div class="panel" id="p-number" hidden>
+     <input id="numin" type="text" inputmode="numeric" maxlength="6" placeholder="000" aria-label="Número do sorteio">
+     <div class="nstat" id="nstat"></div>
+     <div class="sugg" id="sugg"></div>
+     <p class="hint" id="free-t" style="text-align:center;margin-top:10px"></p>
+     <label class="hint" id="paytick-l" style="display:flex;align-items:center;gap:8px;justify-content:center;margin-top:10px;cursor:pointer"><input type="checkbox" id="paytick" style="width:17px;height:17px;accent-color:var(--ac)"> Pagar com <b>Bilhetes</b> <span class="mono">(1 bilhete = R$ 0,50)</span></label>
+     <div class="pickbar" id="pick"><button class="btn ghost" id="random">Escolher aleatório</button><button class="btn" id="confirm" disabled>Confirmar número</button></div>
+     <div class="cbox" id="cbox" hidden>
+      <p><b id="cbox-t"></b></p><p class="hint" id="cbox-p" style="margin:6px 0 0"></p><p class="hint">Depois de confirmado, o número não pode ser trocado.</p>
+      <div class="actions"><button class="btn" id="yes">Sim, reservar</button><button class="btn ghost" id="no">Voltar</button></div>
+     </div>
+    </div>
+
+    <div class="panel" id="p-done" hidden>
+     <div class="field"><label class="label" for="proof">Comprovante</label><input id="proof" readonly></div>
+     <div class="actions"><button class="btn sm" id="copy-proof">Copiar comprovante</button><a class="btn sm ghost" id="share-wa" target="_blank" rel="noopener">WhatsApp</a></div>
+     <p class="hint" style="margin-top:10px">Guarde o comprovante. O resultado será publicado nesta página.</p>
+    </div>
+   </div>
+   <aside class="card sd-side" id="pick-ctx" hidden>
+    <div class="ev-row"><h4 style="font-size:15px">Resumo do sorteio</h4><span class="tag g" id="pc-state">—</span></div>
+    <div class="lrow"><span class="tn">Sorteio</span><b class="lval" id="pc-draw">—</b></div>
+    <div class="lrow" id="pc-ev-row" hidden><span class="tn">Evento</span><b class="lval" id="pc-event">—</b></div>
+    <div class="lrow"><span class="tn">Prêmio principal</span><b class="lval" id="pc-prize">—</b></div>
+    <div class="kv"><span>Custo por número</span><b class="mono" id="pc-cost">—</b></div>
+    <div class="kv"><span>Números livres</span><b class="mono" id="pc-free">—</b></div>
+    <div class="kv"><span>Seu saldo em reais (R$)</span><b class="mono" id="pc-wallet">—</b></div>
+    <div class="kv"><span>Seus números reservados</span><b class="mono" id="pc-mine">—</b></div>
+    <div class="track"><div class="fill" id="pc-fill" style="width:0%"></div></div>
+    <p class="hint" style="font-size:11.5px;margin:0" id="pc-note"></p>
+    <div id="sd-switch"></div>
+   </aside>
+  </div>
+ </div>
+</section>
+
+   <!-- <i class=yi data-i=ticket></i> MEUS BILHETES: botão que revela o carrossel de bilhetes aqui na gaveta -->
+   <div style="display:grid;gap:10px">
+    <button class="btn wide" type="button" id="tks-toggle" aria-expanded="false" aria-controls="tks-box"><i class=yi data-i=ticket></i> Meus números — abrir carrossel</button>
+    <div id="tks-box" hidden style="display:grid;gap:10px;padding-top:4px">
+     <div class="tabs tk-tabs" id="tktabs"><button data-f="active" class="on">Participando</button><button data-f="won"><span class="icn" aria-hidden="true" style="width:13px;height:13px;vertical-align:-2px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4h10v4a5 5 0 0 1-10 0zM9 20h6M12 13v7M17 5h3.5a3.5 3.5 0 0 1-3.5 7M7 5H3.5A3.5 3.5 0 0 0 7 12"/></svg></span> Ganharam</button><button data-f="lost">Não ganharam</button><button data-f="expired">Expirados</button></div>
+     <div class="tks" id="tks"></div>
+     <div class="tk-ctl"><button class="ib sm" id="tkprev" aria-label="Número anterior">‹</button><span class="mono" id="tk-count" style="font-size:12px;color:var(--mu)">1/1</span><button class="ib sm" id="tknext" aria-label="Próximo número">›</button></div>
+    </div>
+   </div>
+   <!-- Últimas participações · sorteios: fica ABAIXO do bloco de sorteios -->
+   <!-- CTA modesto "Um número pode ser seu" — agora junto do bloco de sorteios -->
+   <div class="sg-cta" id="cta-final" hidden>
+    <span class="tag g" id="cta-tag">Sorteio aberto</span>
+    <div style="min-width:0;flex:1 1 220px"><b>Um número pode ser seu</b><p id="cta-p">Enquanto o organizador libera o sorteio, acumule reais fazendo tarefas e ofertas.</p></div>
+    <div class="cta-cd"><span id="cta-cd-l">O sorteio encerra em</span><b id="cta-end">—</b></div>
+    <a class="btn sm" href="#participar">Reservar meu número</a>
+   </div>
+
+   <!-- Últimas participações · sorteios (exclusivo desta gaveta, abaixo do bloco de sorteios) -->
+   <div>
+    <div class="sec-head" style="margin-top:4px"><div class="sec-row"><h2 style="font-size:19px">Últimas participações em sorteios</h2><span class="tag g">Ao vivo</span></div><p>Números reservados agora, em tempo real.</p></div>
+    <div class="card tbl" id="feed-draw"></div>
+   </div>
+
+ </div><!-- /gv-scroll -->
+ </div><!-- /gav -->
+</div><!-- /#sgaveta -->
+
+<!-- barra de aviso do organizador: agora no TOPO, acima do cabeçalho, 100% da largura -->
+
+<!-- feed ao vivo REMOVIDO da interface principal: as "Últimas participações"
+     agora vivem dentro da gaveta de Sorteios (números) e da gaveta de Leilões (lances) -->
+
+<!-- ════════════════════════════════════════════════════════════
+     ANÚNCIO 2 · ADSTERRA / MONETAG — meio da página
+     Sugestão: banner 300x250 (quadrado) ou nativo.
+     ════════════════════════════════════════════════════════════ -->
+<div class="ad-slot" id="ad-slot-2">
+ <span class="ad-label">Publicidade</span>
+ <div class="ad-box">
+  <!-- ▼▼▼ COLE O CÓDIGO DO ANÚNCIO 2 AQUI (Adsterra/Monetag) ▼▼▼ -->
+  <div class="ad-placeholder"><b>Banner de anúncio 2</b><br>300×250 · cole aqui o código Adsterra / Monetag</div>
+  <!-- ▲▲▲ COLE O CÓDIGO DO ANÚNCIO 2 ACIMA ▲▲▲ -->
+ </div>
+</div>
+
+
+
+<!-- ═══ GAVETA DE TAREFAS YSHIPPCOMMERCE · tela cheia, só ofertas oficiais ═══ -->
+<div class="gaveta" id="ogaveta" role="dialog" aria-modal="true" aria-label="Tarefas Yshippcommerce">
+ <div class="gav" id="ogav">
+  <div class="gv-top">
+   <span class="gv-ico" aria-hidden="true"><i class=yi data-i=bolt></i></span>
+   <div><b>Tarefas Yshippcommerce</b><small>OFERTAS OFICIAIS DA PLATAFORMA</small></div>
+   <button class="ib sm" type="button" id="og-x" aria-label="Fechar tarefas Yshippcommerce">✕</button>
+  </div>
+  <div class="gv-scroll">
+<section id="ofertas">
+ <div class="sec-head"><div class="sec-row"><h2>Tarefas Yshippcommerce</h2><div class="ev-nav"><button class="ib sm" id="ofprev" aria-label="Oferta anterior">‹</button><button class="ib sm" id="ofnext" aria-label="Próxima oferta">›</button></div></div><p>Ofertas oficiais do Yshippcommerce, sempre disponíveis. Cada aprovação credita reais (R$) na sua carteira.</p></div>
+ <div class="tabs" id="offtabs" style="max-width:360px;margin-bottom:14px"><button data-v="active" class="on">Ativas</button><button data-v="future">Futuras</button></div>
+ <div class="evs" id="offs"></div>
+</section>
+ </div><!-- /gv-scroll -->
+ </div><!-- /gav -->
+</div><!-- /#ogaveta -->
+
+<!-- ═══ GAVETA DE TAREFAS DE COLABORADORES · tela cheia, só ofertas <i class=yi data-i=handshake></i> ═══ -->
+<div class="gaveta" id="cogaveta" role="dialog" aria-modal="true" aria-label="Tarefas de colaboradores">
+ <div class="gav" id="cogav">
+  <div class="gv-top">
+   <span class="gv-ico" aria-hidden="true"><i class=yi data-i=handshake></i></span>
+   <div><b>Tarefas de colaboradores</b><small>OFERTAS DE EMPRESAS E PARCEIROS <i class=yi data-i=handshake></i></small></div>
+   <button class="ib sm" type="button" id="cog-x" aria-label="Fechar tarefas de colaboradores">✕</button>
+  </div>
+  <div class="gv-scroll">
+<!-- OFERTAS DOS COLABORADORES · tarefas enviadas por parceiros, selo <i class=yi data-i=handshake></i> -->
+<section id="ofertas-colab">
+ <div class="sec-head"><div class="sec-row"><h2>Tarefas de colaboradores</h2><div class="ev-nav"><button class="ib sm" id="ofcprev" aria-label="Oferta anterior">‹</button><button class="ib sm" id="ofcnext" aria-label="Próxima oferta">›</button></div></div><p>Ofertas de empresas, lojas e prestadores parceiros — identificadas pelo carimbo <b><i class=yi data-i=handshake></i> Colaborador</b>. Todas passam pela revisão da equipe e pagam reais (R$) igual às ofertas oficiais.</p></div>
+ <div class="tabs" id="offtabs2" style="max-width:360px;margin-bottom:14px"><button data-v="active" class="on">Ativas</button><button data-v="future">Futuras</button></div>
+ <div class="evs" id="offs-colab"></div>
+ <div class="card" id="clv-teaser" hidden style="margin-top:14px"></div>
+ <div style="margin-top:14px"><button class="btn" type="button" data-collab="1"><i class=yi data-i=handshake></i> Anunciar como colaborador</button></div>
+</section>
+ </div><!-- /gv-scroll -->
+ </div><!-- /gav -->
+</div><!-- /#cogaveta -->
+
+<!-- ════════════════════════════════════════════════════════════
+     ANÚNCIO 3 · ADSTERRA / MONETAG — entre ofertas e leilões
+     Sugestão: banner 320x50 ou nativo responsivo.
+     ════════════════════════════════════════════════════════════ -->
+<div class="ad-slot" id="ad-slot-3">
+ <span class="ad-label">Publicidade</span>
+ <div class="ad-box">
+  <!-- ▼▼▼ COLE O CÓDIGO DO ANÚNCIO 3 AQUI (Adsterra/Monetag) ▼▼▼ -->
+  <div class="ad-placeholder"><b>Banner de anúncio 3</b><br>320×50 ou nativo · cole aqui o código Adsterra / Monetag</div>
+  <!-- ▲▲▲ COLE O CÓDIGO DO ANÚNCIO 3 ACIMA ▲▲▲ -->
+ </div>
+</div>
+
+<!-- ═══ GAVETA DE LEILÕES · tela cheia, desce até logo abaixo do cabeçalho ═══ -->
+
+
+
+<!-- OFEREÇA SEU SERVIÇO -->
+<div class="gaveta" id="offergaveta" role="dialog" aria-modal="true" aria-label="Ofereça seu serviço">
+ <div class="gav" id="offerv">
+  <div class="gv-top">
+   <span class="gv-ico"><i class=yi data-i=toolbox></i></span>
+   <div style="min-width:0"><b>Ofereça seu serviço</b><small>MEMBROS · APROVAÇÃO NO PAINEL</small></div>
+   <button class="ib sm" type="button" id="offerv-x" aria-label="Fechar">✕</button>
+  </div>
+  <div class="gv-scroll" style="padding:12px 16px 28px;overflow-y:auto">
+   <div class="aff-easy"><b>Como funciona:</b> 1) Preencha o serviço · 2) Envie para análise · 3) Com perfil aprovado, aparece em <b>Contrate um profissional</b> · 4) Pedidos chegam para você.</div>
+   <div id="offer-status" class="hint" style="margin:10px 0">Status do seu perfil profissional: …</div>
+   <div class="form-grid">
+    <div class="field"><label class="label">Título do serviço *</label><input id="of-title" placeholder="Ex.: Edito 20 Reels por semana"></div>
+    <div class="field"><label class="label">Preço (R$) *</label><input id="of-price" type="number" min="0.01" step="0.01" placeholder="29.90"></div>
+    <div class="field"><label class="label">Categoria</label><select id="of-cat"></select></div>
+    <div class="field"><label class="label">Subcategoria</label><select id="of-sub"></select></div>
+    <div class="field"><label class="label">Prazo (dias)</label><input id="of-days" type="number" min="1" max="90" value="3"></div>
+    <div class="field"><label class="label">WhatsApp para contato</label><input id="of-wa" placeholder="(11) 99999-9999"></div>
+   </div>
+   <div class="field"><label class="label">Descrição *</label><textarea id="of-desc" rows="4" placeholder="O que você entrega…"></textarea></div>
+   <div class="field"><label class="label">O que está incluso (uma linha por item)</label><textarea id="of-inc" rows="3" placeholder="Ex.: 20 reels"></textarea></div>
+   <button class="btn wide" type="button" id="of-send"><i class=yi data-i=send></i> Enviar para aprovação</button>
+   <div id="offer-mine" style="margin-top:16px;display:grid;gap:10px"></div>
+  </div>
+ </div>
+</div>
+
+<!-- DIVULGUE SEU SERVIÇO -->
+<div class="gaveta" id="svcadsgaveta" role="dialog" aria-modal="true" aria-label="Anúncios de serviços">
+ <div class="gav" id="svcadsv">
+  <div class="gv-top">
+   <span class="gv-ico"><i class=yi data-i=megaphone></i></span>
+   <div style="min-width:0"><b>Divulgue seu serviço</b><small>SÓ COM PERFIL APROVADO</small></div>
+   <button class="ib sm" type="button" id="svcadsv-x" aria-label="Fechar">✕</button>
+  </div>
+  <div class="gv-scroll" style="padding:12px 16px 28px;overflow-y:auto">
+   <div class="aff-easy" id="svcad-gate">Só membros com perfil profissional <b>aprovado</b> podem anunciar. Envie um serviço em <b>Ofereça seu serviço</b> e aguarde a equipe.</div>
+   <div id="svcad-form" hidden>
+    <div class="field"><label class="label">Qual serviço divulgar</label><select id="svcad-gig"></select></div>
+    <div class="field"><label class="label">Texto do anúncio</label><textarea id="svcad-text" rows="3" placeholder="Frase curta para o banner"></textarea></div>
+    <div class="field"><label class="label">Duração</label><select id="svcad-dur"><option value="12">12 horas</option><option value="24">24 horas</option><option value="168">7 dias</option></select></div>
+    <button class="btn wide" type="button" id="svcad-send">Solicitar anúncio</button>
+   </div>
+   <div id="svcad-list" style="margin-top:14px;display:grid;gap:10px"></div>
+  </div>
+ </div>
+</div>
+
+<!-- CAIXA DA COMUNIDADE -->
+<div class="gaveta" id="caixagaveta" role="dialog" aria-modal="true" aria-label="Caixa da Comunidade">
+ <div class="gav" id="caixav">
+  <div class="gv-top">
+   <span class="gv-ico"><i class=yi data-i=gift></i></span>
+   <div style="min-width:0"><b>Caixa da Comunidade</b><small>SORTEIO SEMANAL · INDEPENDENTE DO VIP</small></div>
+   <button class="ib sm" type="button" id="caixav-x" aria-label="Fechar">✕</button>
+  </div>
+  <div class="gv-scroll" style="padding:12px 16px 28px;overflow-y:auto">
+   <div class="card" style="padding:16px;border-color:var(--ac);background:linear-gradient(150deg,var(--as),var(--p) 80%)">
+    <div class="hint">Prêmio estimado desta semana</div>
+    <b class="gold" style="font:800 28px var(--mono)" id="caixa-pot">R$ 0,00</b>
+    <p class="hint" style="margin-top:8px">Quem fez check-in pelo menos 1 vez nos últimos 7 dias concorre automaticamente. Não precisa ser VIP.</p>
+   </div>
+   <div class="aff-easy" style="margin-top:12px"><b>Regras:</b> 1) Faça o check-in diário · 2) Entre na lista da semana · 3) No domingo um número é sorteado · 4) Ganhador recebe reais na carteira.</div>
+   <div id="caixa-me" class="hint" style="margin-top:12px">Seu status: …</div>
+   <button class="btn" type="button" data-vipopen="1" style="margin-top:12px">Ir para check-in</button>
+  </div>
+ </div>
+</div>
+
+<!-- CONTRATE UM PROFISSIONAL · GIGS -->
+<div class="gaveta" id="prosgaveta" role="dialog" aria-modal="true" aria-label="Contrate um profissional">
+ <div class="gav" id="prosv">
+  <div class="gv-top">
+   <span class="gv-ico"><i class=yi data-i=handshake></i></span>
+   <div style="min-width:0"><b>Contrate um profissional</b><small>GIGS · SERVIÇOS DIGITAIS</small></div>
+   <button class="ib sm" type="button" id="prosv-x" aria-label="Fechar">✕</button>
+  </div>
+  <div class="gv-scroll" style="padding:12px 16px 28px;overflow-y:auto">
+   <p class="hint" style="margin:0 0 12px">Serviços publicados pela equipe e por membros com perfil aprovado — design, reels, sites, textos e mais.</p>
+   <div class="form-grid" style="margin-bottom:12px">
+    <div class="field" style="margin:0"><label class="label">Categoria</label><select id="pros-cat"><option value="">Todas</option></select></div>
+    <div class="field" style="margin:0"><label class="label">Buscar</label><input id="pros-q" placeholder="Ex.: reels, logo, site"></div>
+   </div>
+   <div id="pros-chips" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px"></div>
+   <div id="pros-list" class="stack" style="gap:12px"></div>
+   <div id="pros-empty" class="empty" hidden style="padding:24px;text-align:center;border:1px dashed var(--l);border-radius:12px">Nenhum serviço nesta categoria ainda.</div>
+  </div>
+ </div>
+</div>
+
+<!-- ═══ GAVETA DE LEILÕES · tela cheia ═══ -->
+<div class="gaveta" id="lgaveta" role="dialog" aria-modal="true" aria-label="Leilões">
+ <div class="gav" id="lgav">
+  <div class="gv-top">
+   <span class="gv-ico" aria-hidden="true"><i class=yi data-i=gavel></i></span>
+   <div><b>Leilões</b><small>LANCES · META · PRÊMIOS</small></div>
+   <button class="ib sm" type="button" id="lg-auc-x" aria-label="Fechar leilões">✕</button>
+  </div>
+  <div class="gv-scroll">
+   <div class="sec-head" style="padding:0 0 8px">
+    <div class="sec-row"><h2 style="font-size:18px;margin:0">Feed de lances</h2></div>
+    <p class="hint" style="margin:4px 0 0">Lances dados agora, em tempo real.</p>
+   </div>
+   <div class="card tbl" id="feed-auc"></div>
+<section id="leiloes">
+ <div class="sec-head"><div class="sec-row"><h2>Leilões — dê seu lance aqui</h2><div class="ev-nav"><button class="ib sm" data-info="info-au" aria-label="Como funcionam os leilões">ⓘ</button><button class="ib sm" id="aprev" aria-label="Leilão anterior">‹</button><button class="ib sm" id="anext" aria-label="Próximo leilão">›</button></div></div><p><b>É aqui que você participa dos leilões:</b> digite o valor do seu lance no campo "Lance" do leilão desejado e toque em <b>"Dar lance"</b>. Quem acumular mais reais em lances até o fim do prazo leva o prêmio.</p></div>
+ <p class="tipbox"><b>Participar do leilão em 3 passos:</b> 1) Faça tarefas e acumule reais (R$) na carteira. 2) Se o leilão pertence a um evento, confirme a entrada do evento na seção "Eventos". 3) Volte aqui, digite seu lance no card do leilão e toque em "Dar lance". Atingiu o valor total do prêmio? Use o botão "Reivindicar o prêmio agora".</p>
+ <p class="tipbox" id="info-au" hidden><b>Como funcionam os leilões:</b> cada leilão oferta um prêmio com um valor definido em reais (a meta) e um prazo. Você dá lances usando seu saldo em reais — se o leilão pertence a um evento, é preciso ter confirmado a entrada do evento antes. <b>Quem tiver o maior total de lances em reais no fim do prazo ganha o prêmio.</b> Melhor ainda: se o seu total de lances atingir o valor cheio do produto (a meta), aparece o botão <b>"Reivindicar o prêmio agora"</b> e você ganha sem esperar o prazo. Lances de quem não ganha são devolvidos para a carteira; se a meta não for atingida até o fim, todos os lances são devolvidos.</p>
+ <div class="tabs" id="autabs" style="max-width:360px;margin-bottom:14px"><button data-v="active" class="on">Ativos</button><button data-v="ended">Encerrados</button></div>
+ <div class="cvp" id="cvp-leiloes" hidden></div>
+ <div class="evs" id="aucs"></div>
+</section>
+  </div><!-- /gv-scroll -->
+ </div><!-- /gav -->
+</div><!-- /#lgaveta -->
+
+
+
+<!-- ═══ GAVETA DE RESULTADOS · tela cheia, com cabeçalho próprio ═══ -->
+<div class="gaveta" id="rgaveta" role="dialog" aria-modal="true" aria-label="Resultado oficial">
+ <div class="gav" id="rgav">
+  <div class="gv-top">
+   <span class="gv-ico" aria-hidden="true"><i class=yi data-i=trophy></i></span>
+   <div><b>Resultado oficial</b><small>APURAÇÃO · GANHADORES E PRÊMIOS</small></div>
+   <button class="ib sm" type="button" id="rg-x" aria-label="Fechar resultados">✕</button>
+  </div>
+  <div class="gv-scroll">
+<section id="resultado">
+ <div class="sec-head"><div class="sec-row"><h2>Resultado oficial</h2><span class="tag" id="res-tag">Pendente</span></div><p id="res-sub"></p></div>
+ <div class="tabs tabs3" id="rtabs" style="max-width:360px;margin-bottom:14px"><button data-v="running" class="on">Em andamento</button><button data-v="winners">Ganhadores</button><button data-v="ended">Encerrados</button></div>
+ <div class="card tbl" id="res"></div>
+</section>
+ </div><!-- /gv-scroll -->
+ </div><!-- /gav -->
+</div><!-- /#rgaveta -->
+
+<!-- ═══ CENTAL DE ANÚNCIOS · resumo na página principal ═══ -->
+
+<!-- ═══ YSHIPPCOMMERCE MARKET · resumo na página principal ═══ -->
+<section id="market-main">
+ <div class="sec-head"><div class="sec-row"><h2><i class=yi data-i=cart></i> Yshippcommerce Market</h2><span class="tag y">Dinheiro real</span></div><p>A loja oficial do Yshippcommerce: <b>pacotes de saldo</b>, <b>planos de mineração</b> que rendem reais todo mês, <b>buffs</b> que turbinam suas recompensas e <b>recargas em reais</b>. Pagamento por <b>PIX QR Code</b> — e na <b>Carteira</b> você usa seu saldo em reais, investe em criptomoedas e saca via PIX.</p></div>
+ <div class="mk-shop">
+  <div class="mk-tile"><span class="ti"><i class=yi data-i=ticket></i></span><b>Pacotes de saldo</b><small>quanto maior, mais reais por real</small><span class="tn" id="mktm-pkg">…</span></div>
+  <div class="mk-tile"><span class="ti"><i class=yi data-i=hammer></i></span><b>Mineração</b><small>reais todo mês</small><span class="tn" id="mktm-mine">…</span></div>
+  <div class="mk-tile"><span class="ti"><i class=yi data-i=bolt></i></span><b>Buffs</b><small>turbine recompensas por tempo limitado</small><span class="tn" id="mktm-buff">…</span></div>
+  <div class="mk-tile"><span class="ti"><i class=yi data-i=coins></i></span><b>Recarga em reais</b><small>saldo em reais direto na carteira</small></div>
+ </div>
+ <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px">
+  <button class="btn sm" id="mkt-main-open">Abrir o Market <i class=yi data-i=external></i></button>
+
+  <span class="hint">Pagamento via PIX · tela cheia · itens creditados pela administração.</span>
+ </div>
+</section>
+
+<!-- ═══ YSHIPPWALLET · resumo compacto na página inicial ═══ -->
+<section id="carteira-main">
+ <div class="sec-head"><div class="sec-row"><h2><i class=yi data-i=coins></i> YshippWallet</h2><span class="tag y">Carteira digital</span></div><p>Seu dinheiro em reais (R$) no centro de tudo — com cripto, mineração e saque via PIX — e as fichas (bilhetes, moedas e diamantes) ao lado.</p></div>
+ <div class="wm-hero">
+  <div>
+   <span class="wm-label"><i class=yi data-i=safe style="width:12px;height:12px"></i> Saldo total estimado</span>
+   <b class="wm-total" id="walm-total">…</b>
+   <span class="wm-sub">Saldo em <b>reais (R$)</b> · saque via PIX</span>
+  </div>
+  <div class="wm-chips">
+   <div class="wm-chip"><span><i class=yi data-i=cash style="width:12px;height:12px"></i> Saldo (R$)</span><b id="walm-tk">…</b></div>
+   <div class="wm-chip"><span><i class=yi data-i=star style="width:12px;height:12px"></i> Fichas</span><b id="walm-xc">…</b></div>
+   <div class="wm-chip"><span><i class=yi data-i=chart style="width:12px;height:12px"></i> Cripto</span><b id="walm-crypto">…</b></div>
+  </div>
+  <div class="wm-acts">
+   <button class="btn" id="wal-main-open">Abrir a YshippWallet <i class=yi data-i=external></i></button>
+   <span class="hint">Tela cheia · cripto, mineração e saque PIX.</span>
+  </div>
+  </div>
+ </div>
+</section>
+
+<!-- ═══ COFRE REAL · sorteio mensal das taxas de publicação ═══ -->
+<!-- ════════════════════════════════════════════════════════════
+     ANÚNCIO 4 · ADSTERRA / MONETAG — antes das regras/FAQ
+     Sugestão: banner 728x90 responsivo ou popunder/social bar.
+     ════════════════════════════════════════════════════════════ -->
+<div class="ad-slot" id="ad-slot-4">
+ <span class="ad-label">Publicidade</span>
+ <div class="ad-box">
+  <!-- ▼▼▼ COLE O CÓDIGO DO ANÚNCIO 4 AQUI (Adsterra/Monetag) ▼▼▼ -->
+  <div class="ad-placeholder"><b>Banner de anúncio 4</b><br>728×90 · cole aqui o código Adsterra / Monetag</div>
+  <!-- ▲▲▲ COLE O CÓDIGO DO ANÚNCIO 4 ACIMA ▲▲▲ -->
+ </div>
+</div>
+
+<!-- FAQ da home foi REMOVIDO da interface: as perguntas e respostas agora vivem
+     só na Central de Ajuda (botão de suporte). Os dados abaixo ficam ocultos
+     porque a Central de Ajuda os reaproveita em tempo real. -->
+<section id="regras" hidden aria-hidden="true">
+ <div class="faq" id="faq-dyn" hidden style="display:none"></div>
+ <div class="faq" id="faq-static" style="display:none">
+
+  <p class="label">O básico</p>
+  <details open><summary>É gratuito participar?</summary><div>Sim. Não existe cobrança para participar, fazer tarefas ou reservar números.</div></details>
+  <details><summary>Quem organiza o sorteio?</summary><div>O grupo Yellowishipp, do qual o Anime i Geek faz parte. O organizador confere as provas das tarefas, faz a apuração e entra em contato com os ganhadores.</div></details>
+  <details><summary>Qual é a diferença entre evento, sorteio, leilão, tarefa e número?</summary><div>
+   <b>Evento:</b> é o centro de tudo. Cada evento reúne tarefas, sorteios e leilões próprios — os sorteios e leilões de um evento não se misturam com os de outro. Para participar do que um evento oferece, primeiro você confirma a entrada dele (que pode custar reais).<br>
+   <b>Tarefa:</b> é uma ação dentro de um evento, como se cadastrar em um site ou app. Você envia a prova e, se o organizador aprovar, ganha os reais (R$) daquela tarefa.<br>
+   <b>Real (R$):</b> é o dinheiro da plataforma — saldo em reais, saque via PIX. As fichas (bilhetes, moedas e diamantes) completam o sistema: bilhetes trocam por números de sorteio, diamantes dão lances em leilão, e nenhuma ficha se converte de volta em reais.<br>
+   <b>Sorteio:</b> escolha números pagando com reais ou com bilhetes. Os prêmios são vinculados ao próprio sorteio.<br>
+   <b>Leilão:</b> dê lances com reais ou diamantes para arrematar o prêmio. O prêmio é do próprio leilão.<br>
+   Resumindo: eventos têm tarefas, tarefas dão reais, e o saldo entra nos sorteios e leilões do evento que você confirmou.
+  </div></details>
+  <details><summary>Qual é a moeda da plataforma?</summary><div>O <b>real (R$)</b> continua sendo o centro: recompensas de tarefas, entradas de eventos, mineração e saques são em reais. Além dele existem as <b>fichas</b> — <b>Moedas Yshipp</b> (10 = R$ 0,01, a moeda das tarefas), <b>Bilhetes</b> (1 = R$ 0,50, trocáveis por números de sorteio) e <b>Diamantes</b> (1 = R$ 1,00, lances de leilão). Fichas não são convertidas em reais — apenas entre si, na aba Fichas da carteira.</div></details>
+  <details><summary>Como funcionam as fichas (moedas, bilhetes e diamantes)?</summary><div>As fichas são compradas no <b>Yshipp Market</b>, aba Pacotes, e ganhas em tarefas de colaboradores e no <b>AppHub</b>. A cotação (10 moedas = R$ 0,01 · 1 bilhete = R$ 0,50 · 1 diamante = R$ 1,00) serve de referência para você saber quanto vale cada recompensa — ex.: uma tarefa de R$ 1,00 equivale a 2 bilhetes, 1.000 moedas ou 1 diamante. Bilhetes são trocados por números de sorteio na hora de reservar; diamantes entram como lances nos leilões; moedas pagam tarefas e taxas de publicação de colaboradores.</div></details>
+  <details><summary>Por que preciso confirmar a entrada de um evento?</summary><div>Os sorteios e leilões fazem parte de eventos. A entrada do evento (que pode custar reais) libera todos os sorteios e leilões daquele evento para você. Sem confirmar a entrada, não é possível escolher números nem dar lances nas disputas daquele evento.</div></details>
+  <details><summary>Como funcionam os leilões?</summary><div>Cada leilão oferta um prêmio com um valor em reais (a meta) e um prazo. Você dá lances em reais: quem acumular o maior total até o fim do prazo leva o prêmio. Se o seu total de lances atingir a meta (o valor cheio do produto), você pode clicar em <b>"Reivindicar o prêmio agora"</b> e ganhar sem esperar o prazo. Se ninguém atingir a meta e o prazo acabar, todos os lances são devolvidos — e os lances de quem não ganha também são devolvidos.</div></details>
+  <details><summary>O que acontece com meu saldo quando o sorteio é apurado?</summary><div>O valor usado nos números sorteados virou prêmio. O valor gasto nos números <b>que não ganharam são devolvidos automaticamente</b> para a sua carteira quando o organizador publica o resultado oficial.</div></details>
+
+  <p class="label" style="margin-top:10px">Como participar</p>
+  <details><summary>Quais são as etapas para participar?</summary><div>
+   1) Crie sua conta e verifique seu e-mail. 2) Preencha nome completo e data de nascimento. 3) Faça a tarefa de entrada (cadastro gratuito no Tamojunto) e envie a prova. 4) Depois da aprovação, escolha seu número. A página mostra sempre o próximo passo.
+  </div></details>
+  <details><summary>Por que preciso entrar na conta?</summary><div>O login identifica o participante, guarda sua carteira em reais e impede reservas além do saldo que você conquistou.</div></details>
+  <details><summary>Por que pedem nome completo e data de nascimento?</summary><div>Muitas tarefas exigem cadastro em sites ou apps. O organizador compara o nome do seu perfil com o nome usado no cadastro, e isso evita erros na análise. A data de nascimento ajuda a identificar o participante e a confirmar os ganhadores.</div></details>
+  <details><summary>Posso mudar meu nome depois?</summary><div>Só até enviar a primeira prova. Depois disso o nome fica travado, para que seja sempre o mesmo em todas as tarefas. Confira com cuidado antes de salvar e use o nome completo que aparece nos seus cadastros.</div></details>
+
+  <p class="label" style="margin-top:10px">Tarefas, provas e recompensas</p>
+  <details><summary>O que é a tarefa de entrada?</summary><div>É a primeira tarefa e é obrigatória: o cadastro gratuito no Tamojunto. Ela vale a sua primeira recompensa em reais e libera a participação em tudo o mais. Sem ela aprovada, não é possível reservar número nem enviar tarefas de eventos.</div></details>
+  <details><summary>Como ganho mais reais?</summary><div>Fazendo as tarefas dos eventos ativos e ofertas. Cada tarefa informa quanto paga em reais. Só é possível enviar uma tarefa enquanto o evento dela estiver em andamento.</div></details>
+  <details><summary>O que é a prova da tarefa?</summary><div>É o que você envia para mostrar que fez a tarefa. O organizador define o tipo em cada tarefa:<br>
+   <b>Nome completo:</b> o site envia automaticamente o nome do seu perfil, que deve ser o mesmo usado no cadastro da tarefa.<br>
+   <b>Texto:</b> você escreve a informação pedida na tarefa.<br>
+   <b>E-mail:</b> você informa o e-mail usado no cadastro da tarefa.<br>
+   <b>Código:</b> um código que aparece no site ou app da tarefa. Você o digita aqui.
+  </div></details>
+  <details><summary>Minha tarefa foi rejeitada. E agora?</summary><div>Você pode corrigir e enviar a prova de novo. Quando houver motivo informado pelo organizador, ele aparece na própria tarefa. Tarefas aprovadas ou em análise não podem ser enviadas outra vez.</div></details>
+  <details><summary>Onde vejo meu saldo?</summary><div>Na sua <b>carteira inteligente</b>, no menu. Ela mostra o total em reais (R$) e o histórico completo de movimentos: tarefas aprovadas, entradas de eventos, reservas de números, lances em leilões, devoluções e créditos do organizador.</div></details>
+  <details><summary>Quando meu número será liberado?</summary><div>Depois que o organizador conferir e aprovar suas tarefas. A página libera a escolha automaticamente, sem você precisar recarregar. Cada tarefa aprovada libera mais saldo para escolher números.</div></details>
+
+  <p class="label" style="margin-top:10px">Números, apuração e dados</p>
+  <details><summary>Quantos números posso escolher?</summary><div>Enquanto houver saldo em reais: cada número consome o valor definido pelo organizador (normalmente R$ 1,00 por número). Depois de confirmado, o número não pode ser trocado.</div></details>
+  <details><summary>Quando o sorteio encerra?</summary><div>O organizador define a regra: por data e hora, quando uma quantidade de números for reservada, ou o que acontecer primeiro. A página mostra a contagem regressiva ou a quantidade restante.</div></details>
+  <details><summary>Como será feita a apuração?</summary><div>Depois do encerramento, o organizador faz o sorteio eletronicamente, com gerador de números aleatórios seguro do navegador. Concorrem apenas os números reservados, sem repetição: cada prêmio sai para um número diferente, na ordem da lista de prêmios (o primeiro número sorteado leva o prêmio principal). O resultado é publicado nesta página, com o nome abreviado de cada ganhador.</div></details>
+  <details><summary>Quais dados meus aparecem publicamente?</summary><div>Apenas seu primeiro nome com a inicial do segundo (ex.: Maria S.) e o número reservado. Nome completo, data de nascimento e e-mail ficam visíveis somente para o organizador e são usados apenas para conferir tarefas e contatar ganhadores.</div></details>
+  <details><summary>Posso criar mais de uma conta?</summary><div>Não. Cada pessoa deve participar com uma única conta. Cadastros duplicados, com nomes repetidos ou provas falsas, podem ser desconsiderados pelo organizador.</div></details>
+  <details><summary>O cupom faz parte do prêmio?</summary><div>Não. O cupom é uma oferta relacionada ao Tamojunto e não é um dos prêmios do sorteio.</div></details>
+
+ </div>
+</section>
+</main>
+
+<!-- capa em carrossel (posição: rodapé) — imagem definida no painel administrativo -->
+<div class="wrap"><div class="cvp" id="cvp-rodape" hidden></div></div>
+<footer><div class="wrap">
+ <div class="brand"><span class="mark">Y</span>Yshippcommerce</div>
+ <p>Participação gratuita. Esta promoção não é patrocinada, endossada nem administrada pelo Facebook. Os números de audiência são informações fornecidas pelo organizador. O link do Tamojunto é uma indicação do organizador.</p>
+ <div class="platform-meta" id="platform-meta" hidden><span id="platform-contact" hidden></span><a id="platform-support" href="#" target="_blank" rel="noopener noreferrer" hidden>Fale com o suporte</a></div>
+ <p><button class="link" id="cs-reopen" type="button"><i class=yi data-i=lock></i> Termos de uso e gerenciar permissões</button></p>
+ <p><button class="btn sm ghost" type="button" data-tbtop="1"><i class=yi data-i=up></i> Voltar ao topo</button></p>
+</div></footer>
+
+<!-- ═══ TERMOS DE USO, RESPONSABILIDADES E PERMISSÕES (barra inferior de largura total) ═══ -->
+<div class="consent" id="consent" hidden role="dialog" aria-modal="false" aria-labelledby="cs-title">
+ <div class="wrap cs-in">
+  <div class="cs-row">
+   <span class="cs-ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4.5" y="10.5" width="15" height="10" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/><circle cx="12" cy="15.5" r="1.3" fill="currentColor" stroke="none"/></svg></span>
+   <div class="cs-txt">
+    <b id="cs-title">Termos de uso, responsabilidades e permissões</b>
+    <p>Para usar o Yshippcommerce com segurança, você precisa aceitar os <button class="link" id="cs-terms-open" type="button" aria-expanded="false">termos de uso e responsabilidades</button>. As permissões opcionais você escolhe em <b>Gerenciar permissões</b>.</p>
+   </div>
+   <div class="cs-act">
+    <button class="btn sm ghost" id="cs-manage" type="button" aria-expanded="false">Gerenciar permissões</button>
+    <button class="btn sm ghost" id="cs-no" type="button">Não aceito</button>
+    <button class="btn sm" id="cs-yes" type="button">Sim, aceito</button>
+   </div>
+  </div>
+  <div class="cs-more" id="cs-terms" hidden>
+   <ol>
+    <li><b>1. Natureza da plataforma.</b> O Yshippcommerce é uma plataforma de sorteios, leilões, tarefas e eventos operada por um organizador independente. A <b>participação nos sorteios, leilões, eventos e tarefas é integralmente gratuita</b>: criação de conta, execução de tarefas, reserva de números e registro de lances não exigem pagamento. A moeda interna da plataforma é o <b>real (R$)</b> e o saldo não pode ser transferido entre contas. Existem <b>opcionalmente</b> recursos pagos — o <b>Yshipp Market</b> (pacotes de saldo, planos de mineração, buffs e recargas em reais) e a carteira em reais — sempre com pagamento por PIX e confirmação da administração. <b>Nenhum recurso da plataforma promete rendimento, retorno financeiro ou garantia de ganho.</b> Sorteios e leilões são gratuitos e regidos exclusivamente pelas regras destes termos.</li>
+    <li><b>2. Uma conta por pessoa.</b> Cada pessoa pode manter apenas <b>uma</b> conta, com nome verdadeiro e e-mail de uso exclusivo. São vedados contas duplicadas, e-mails descartáveis utilizados para multiplicar recompensas, contas em nome de terceiros e o uso de automatizações (bots, scripts ou macros) na execução de tarefas. A conta é pessoal e intransferível, e a senha nunca deve ser compartilhada — a equipe do Yshippcommerce jamais a solicitará.</li>
+    <li><b>3. Tarefas, provas e comprovantes.</b> As tarefas (seguir perfis, instalar aplicativos, assistir a vídeos etc.) são realizadas em serviços de terceiros. Ao abrir o card da tarefa, você acessa a <b>área de trabalho</b>, que reúne categoria, dificuldade, etapas da missão e valor em reais. Concluída a tarefa, o comprovante deve ser enviado pela própria área de trabalho (texto, código, print, gravação de tela ou data e hora, conforme exigido — algumas tarefas solicitam mais de uma prova). Envie somente o que for pedido: <b>nunca envie senhas, documentos completos, dados bancários ou imagens sensíveis</b>. Provas falsas, editadas ou reutilizadas implicam reprovação, cancelamento da recompensa da tarefa e, em casos graves, suspensão da conta.</li>
+    <li><b>4. Sorteios, leilões e apuração.</b> Cada sorteio possui números, custo (em reais ou bilhetes) e prêmios próprios, divulgados antes da participação. Os números reservados ficam visíveis no comprovante oficial. Ao publicar o resultado, o valor dos números não premiados é <b>devolvido automaticamente</b> à carteira, na mesma forma de pagamento (reais ou bilhetes). Nos leilões, os lances são dados em reais ou diamantes; caso a meta não seja atingida até o fim do prazo, <b>todos os lances são devolvidos</b> na moeda em que foram dados. A apuração utiliza sorteio automático entre os números reservados, com resultado publicado na página oficial.</li>
+    <li><b>5. Saldo, troco e devoluções.</b> A moeda de valor real é o real (R$). Ao usar créditos de valor superior ao necessário, a diferença é <b>devolvida como troco</b>, diretamente na carteira. Devoluções automáticas ocorrem nos seguintes casos: números não premiados na apuração, lances de participantes que não arrematam o leilão, leilões encerrados sem meta atingida e ofertas de colaboradores negadas (taxa devolvida ao colaborador). Nenhuma operação da plataforma resulta em perda de saldo quando conduzida dentro das regras. <b>Fichas</b> (Moedas Yshipp, Bilhetes e Diamantes) têm cotação fixa de referência (10 moedas = R$ 0,01 · 1 bilhete = R$ 0,50 · 1 diamante = R$ 1,00), <b>não são convertidas em reais</b> e só podem ser trocadas entre si dentro da carteira.</li>
+    <li><b>6. Prêmios e entrega.</b> Os prêmios anunciados nos sorteios e leilões são entregues pelo organizador ao ganhador confirmado. Para habilitar a entrega, o perfil deve estar completo: <b>nome completo, data de nascimento, endereço e chave Pix</b> (para prêmios em dinheiro) ou endereço de entrega (para prêmios físicos). O contato é realizado por e-mail ou WhatsApp cadastrados. O organizador pode solicitar confirmação de identidade antes da entrega de prêmios de alto valor; os dados são utilizados exclusivamente para essa finalidade e mantidos em sigilo.</li>
+    <li><b>7. Dados pessoais — coleta e finalidade.</b> Coletamos: e-mail e senha (acesso); nome, data de nascimento, gênero, WhatsApp, chave Pix e endereço (conferência de tarefas e entrega de prêmios); histórico de tarefas, reservas, lances e carteira (operação da plataforma e prevenção a fraudes). A foto de perfil é um personagem do próprio site, escolhido por você na tela do perfil — não utilizamos nem consultamos serviços externos de imagem, e nenhuma foto sua é enviada à internet.</li>
+    <li><b>8. Dados pessoais — visibilidade.</b> Publicamente, exibimos apenas o <b>nome abreviado</b> (ex.: Maria S.) e os números reservados. E-mail, endereço, chave Pix, data de nascimento e comprovantes <b>nunca são exibidos publicamente</b>. Internamente, o organizador acessa esses dados somente para aprovar provas, apurar resultados e entregar prêmios. Prestadores técnicos (hospedagem, e-mails e publicidade) processam dados apenas para o funcionamento do serviço.</li>
+    <li><b>9. Dados pessoais — guarda, segurança e exclusão.</b> Os dados são mantidos enquanto a conta existir e também para registrar resultados (transparência dos sorteios). Não vendemos dados. Você pode solicitar a exclusão da conta e dos dados pelo suporte; após a exclusão, mantemos apenas o mínimo indispensável para registrar prêmios já entregues e prevenir fraudes. Seus direitos de acesso, correção e portabilidade, garantidos pela LGPD (Lei nº 13.709/2018), podem ser exercidos junto ao suporte.</li>
+    <li><b>10. Responsabilidades do participante.</b> Você responde pela veracidade das informações e provas enviadas, pelo uso da própria conta e pela guarda da sua senha. Ao enviar um comprovante, declara que a tarefa foi executada pessoalmente, de forma legítima, no serviço indicado. Responde ainda pelo uso da plataforma em conformidade com a lei.</li>
+    <li><b>11. Responsabilidades do organizador.</b> O organizador se compromete a: manter a participação gratuita; apurar os sorteios de forma automática e transparente; publicar os resultados nesta página; devolver os valores conforme as regras (itens 4 e 5); guardar os dados em sigilo; e contatar os ganhadores para a entrega dos prêmios.</li>
+    <li><b>12. Suspensão e exclusão de contas.</b> Contas que violem estas regras (em especial os itens 2, 3, 5 e 10) podem ser suspensas ou excluídas, com perda do saldo obtido irregularmente. Prêmios legítimos já entregues não são confiscados.</li>
+    <li><b>13. Links e serviços de terceiros.</b> Tarefas, capas e anúncios apontam para serviços de terceiros, com termos próprios. Esta promoção <b>não é patrocinada, associada nem administrada pelo Facebook, Google, Meta ou qualquer outro serviço</b> citado em tarefas e anúncios.</li>
+    <li><b>14. Menores de idade.</b> A plataforma é destinada a maiores de 18 anos. Menores somente participam com conhecimento e autorização expressa do responsável legal, que assume a responsabilidade pela participação.</li>
+    <li><b>15. Alterações dos termos.</b> Estes termos podem ser atualizados para refletir melhorias ou exigências legais. A versão vigente permanece sempre nesta página, e mudanças relevantes são comunicadas por notificação no site.</li>
+    <li><b>16. Colaboradores e ofertas de parceiros.</b> Empresas, lojas e prestadores podem se cadastrar como <b>colaboradores</b> e enviar tarefas pelo <b>formulário guiado de 5 etapas</b> (“Anunciar como colaborador”: Serviço → Missão → Prova → Resumo → Pagamento). <b>O envio é tarifado:</b> ao publicar, o colaborador paga uma <b>taxa de 30% sobre o valor total pago aos participantes</b> (recompensa por participante × vagas), cobrada fora desse valor e descontada da carteira na etapa Pagamento; se a oferta for negada, a taxa é devolvida. As ofertas passam por revisão da equipe: se algo estiver incompleto, o colaborador recebe um comentário para editar; se negada, recebe o motivo e pode recorrer. Ofertas aprovadas são publicadas na seção <b>Ofertas dos colaboradores</b> com o carimbo <b><i class=yi data-i=handshake></i> Colaborador</b> (ofertas oficiais ficam na seção <b>Ofertas Yshippcommerce</b>) e seguem as mesmas regras da plataforma: gratuitas para o participante, recompensa em reais e comprovante quando exigido. Cada tarefa possui um <b>ID</b> exibido no card, copiável para identificação. O colaborador responde pela veracidade, legalidade e funcionamento da sua oferta, produto ou serviço; o organizador pode recusar, pausar ou remover qualquer oferta. Após a publicação, <b>a inspeção das provas é responsabilidade do colaborador</b>, na <b>Central do colaborador</b>: aprovar (reais creditados na hora), pedir correção ou negar com motivo. Se o participante suspeitar de <b>má-fé na avaliação</b>, pode <b>levar o caso ao suporte com o ID da tarefa</b>, direto da área de trabalho — a equipe audita o caso e pode reverter a decisão e creditar os reais.</li>
+    <li><b>17. Cofre Real — sorteio mensal das taxas.</b> Todas as taxas de publicação pagas pelos colaboradores são somadas no <b><i class=yi data-i=trophy></i> Cofre Real</b>. Este sorteio está <b>sempre ativo</b>: cada participante escolhe <b>um número de 1 a 1000</b> (gratuito, um número por pessoa por mês, alterável até o sorteio). No fim de cada mês, um número é sorteado: quem tiver o número sorteado recebe o valor acumulado (dividido igualmente entre acertadores) e o cofre reinicia; <b>se ninguém acertar, o valor acumula para o mês seguinte</b>. O prêmio é creditado em reais e o resultado fica no histórico da seção Cofre Real. A participação é gratuita e não consome saldo.</li>
+    <li><b>18. Anúncios patrocinados e recompensa por espera.</b> O botão de anúncio abre uma gaveta com conteúdo publicitário definido pelo organizador. Mantendo o anúncio aberto até o fim da contagem regressiva, você recebe os reais indicados, creditados diretamente na carteira. A recompensa é paga <b>uma vez por anúncio</b> (cada anúncio é identificado pela data de atualização definida no painel). Fechar antes do fim cancela a recompensa. Fraudes (automatizações, manipulação de relógio, contas duplicadas) anulam a recompensa e suspendem a conta.</li>
+    <li><b>19. Dúvidas e contato.</b> Qualquer dúvida sobre estes termos, sobre seus dados ou sobre um resultado pode ser enviada pela tela de Suporte <i class=yi data-i=headset></i>. O atendimento responde pelo e-mail ou WhatsApp cadastrados na sua conta.</li>
+    <li><b>20. Carteira, reais (R$) e saques PIX.</b> A <b>YshippWallet</b> mantém um <b>saldo único em reais (R$)</b>, alimentado por tarefas, sorteios, leilões, recargas, vendas de criptomoedas ou pagamentos. Saques em reais são solicitados via PIX, debitados na hora e <b>processados pela administração</b> (podem ser recusados com devolução integral do valor em casos de inconsistência). Não há garantia de prazo, rendimento ou valorização: o saldo em reais corresponde apenas ao que foi efetivamente registrado na sua carteira.</li>
+    <li><b>21. Yshipp Market, criptomoedas e mineração.</b> Os itens do Market (pacotes de saldo, planos de mineração, buffs e recargas) são produtos opcionais pagos em PIX. O pedido é creditado automaticamente na carteira após a confirmação do pagamento pela administração; pedidos não confirmados podem ser cancelados sem cobrança. Planos de mineração rendem reais conforme o plano contratado e pelo período contratado — o rendimento é limitado ao teto do plano e não constitui investimento financeiro. A carteira de criptomoedas é um recurso de entretenimento interno: cotações meramente indicativas e conversões dentro da própria carteira; <b>não há saque de criptomoedas, promessa de valorização nem rendimento garantido</b>.</li>
+    <li><b>22. Central de Anúncios (anunciantes e modalidades).</b> Anunciantes podem publicar campanhas nas modalidades da Central de Anúncios: anúncios tradicionais, vídeos do YouTube, códigos de plataformas de monetização (como Adsterra e Monetag) e campanhas de links encurtados monetizados (EncurtaNet). Toda campanha passa por <b>aprovação da administração</b>, pode ser rejeitada, pausada ou removida, e é exibida nos espaços publicitários do site de forma isolada (códigos de terceiros rodam em áreas restritas, sem acesso aos dados internos da plataforma ou dos usuários). Campanhas com recompensa pagam os reais anunciados ao participante <b>uma única vez por participação válida</b>, validados pelos mecanismos da própria modalidade (percurso concluído, retorno ao destino oficial com token individual, contagem de espera); recompensas são previamente reservadas do saldo do anunciante. O Yshippcommerce não se responsabiliza pelo conteúdo, legalidade ou funcionamento dos serviços externos anunciados; denúncias podem ser feitas pelo suporte e campanhas irregulares são removidas.</li>
+    <li><b>23. Notificações, perfil público, bloqueios e feedback.</b> As notificações do painel chegam como avisos e ficam guardadas na <b>Central de Notificações</b>, onde você escolhe quais categorias geram avisos instantâneos — desligar o aviso não apaga o histórico. Cada membro possui um <b>perfil público</b> com apenas informações públicas (nome, tempo de casa, estatísticas e selos); dados pessoais, financeiros e sensíveis nunca são exibidos. Você pode <b>bloquear um colaborador</b> para deixar de ver as tarefas dele (ferramenta pessoal e reversível, sem aviso ao outro lado). Pela <b>Central de Feedback</b> e pelos botões de feedback nas seções, você pode avaliar, sugerir, reclamar ou relatar problemas; relatos são analisados pela administração, que pode aplicá-los como melhorias na plataforma. Abuso dessas ferramentas para perseguir, discriminar ou difamar terceiros implica suspensão.</li>
+   </ol>
+  </div>
+  <div class="cs-more" id="cs-perms" hidden>
+   <label class="cs-perm"><span class="cs-pt"><b>Essenciais</b><small>Login, carteira em reais, segurança da conta e preferências de tema. Necessárias para o site funcionar.</small></span><input type="checkbox" class="cs-sw" checked disabled aria-label="Permissões essenciais (sempre ativas)"></label>
+   <label class="cs-perm"><span class="cs-pt"><b>Notificações do organizador</b><small>Avisos e novidades enviados pelo painel (novos sorteios, resultados, eventos).</small></span><input type="checkbox" class="cs-sw" id="cs-notes" checked></label>
+   <label class="cs-perm"><span class="cs-pt"><b>Anúncios personalizados</b><small>Permite que os parceiros de publicidade mostrem anúncios mais relevantes. Sem isso, os anúncios continuam, mas genéricos.</small></span><input type="checkbox" class="cs-sw" id="cs-ads"></label>
+   <label class="cs-perm"><span class="cs-pt"><b>Estatísticas de uso</b><small>Dados anônimos de navegação para melhorar a plataforma.</small></span><input type="checkbox" class="cs-sw" id="cs-stats"></label>
+   <label class="cs-perm cs-req"><span class="cs-pt"><b>Li e aceito os termos de uso e responsabilidades</b><small>Obrigatório para entrar, criar conta e participar de sorteios, leilões e tarefas.</small></span><input type="checkbox" class="cs-sw" id="cs-terms-ok"></label>
+   <div class="actions" style="margin-top:6px"><button class="btn sm" id="cs-save" type="button">Salvar minhas escolhas</button><span class="hint" id="cs-msg"></span></div>
+  </div>
+ </div>
+</div>
+
+<!-- ═══ CENTRAL DE AJUDA · tela cheia, nativa e inteligente (identifica o usuário logado) ═══ -->
+<div id="sup-modal" hidden>
+ <div class="hp-wrap" role="dialog" aria-modal="true" aria-label="Central de Ajuda">
+  <div class="hp-top">
+   <span class="hp-ico" aria-hidden="true"><i class=yi data-i=headset></i></span>
+   <div class="hp-tt"><b>Central de Ajuda</b><small id="hp-who">Yshippcommerce · atendimento</small></div>
+   <button class="ib" id="sup-close" aria-label="Fechar Central de Ajuda">✕</button>
+  </div>
+  <!-- código de suporte salvo no painel (settings.supportCode): roda isolado aqui -->
+  <iframe class="sup-frame" id="sup-frame" hidden title="Tela de suporte personalizada"></iframe>
+  <div class="hp-main" id="hp-main"><div class="hp-inner" id="hp-inner"><p class="hint">Carregando…</p></div></div>
+ </div>
+</div>
+
+<!-- ÁREA DE TRABALHO DA TAREFA (aberta ao clicar no card modesto) -->
+<div class="ws-modal" id="ws" hidden>
+ <div class="ws-box" role="dialog" aria-label="Área de trabalho">
+  <div class="ws-head">
+   <div class="ws-title"><span class="ws-ico" id="ws-ico" aria-hidden="true"><i class=yi data-i=target></i></span><div style="min-width:0"><b id="ws-title">Área de trabalho</b><small id="ws-sub">Tarefa · execução e comprovante</small></div></div>
+   <button class="ib sm" id="ws-close" aria-label="Fechar área de trabalho">✕</button>
+  </div>
+  <div class="ws-body" id="ws-body"></div>
+ </div>
+</div>
+
+<!-- ═══ GAVETA DE LOGIN EM TELA CHEIA · desliza de cima ao clicar em Entrar/Criar conta ═══ -->
+<div class="gaveta" id="login-gaveta" role="dialog" aria-modal="true" aria-label="Entrar ou criar conta">
+ <div class="gav" id="login-gav">
+  <div class="gv-top">
+   <span class="gv-ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg></span>
+   <div><b id="lg-title">Sua participação começa aqui.</b><small>Etapa 1 de 2 · acesso à conta</small></div>
+   <button class="ib sm" type="button" id="lg-x" aria-label="Fechar tela de login">✕</button>
+  </div>
+  <div class="gv-timer">Entre ou crie sua conta. Depois, vamos orientar você nas próximas etapas.</div>
+  <div class="lg-stage">
+   <div class="notice" id="lg-inapp" hidden>Você está no navegador de um aplicativo (Facebook/Instagram). O login com Google pode ser bloqueado aqui. Se isso acontecer, entre com e-mail e senha.</div>
+   <div class="tabs" id="lg-tabs"><button data-m="login" class="on">Entrar</button><button data-m="register">Criar conta</button></div>
+   <div class="field" style="margin-top:14px"><label class="label" for="lg-email">E-mail</label><input id="lg-email" type="email" autocomplete="email" placeholder="seuemail@exemplo.com"></div>
+   <div class="field" id="lg-pw-f"><label class="label" for="lg-pw">Senha</label>
+    <div class="pw"><input id="lg-pw" type="password" autocomplete="current-password" placeholder="Sua senha"><button class="btn sm ghost" id="lg-showpw" type="button">Mostrar</button></div>
+   </div>
+   <label class="lg-terms" id="lg-terms-wrap"><input type="checkbox" id="lg-terms-ok"><span>Eu li e aceito os <button class="link" type="button" data-terms="1">termos de uso e responsabilidades</button> e a política de dados do Yshippcommerce.</span></label>
+   <div class="actions" style="justify-content:space-between"><button class="btn" id="lg-go">Entrar</button><button class="link" id="lg-forgot" type="button">Esqueci minha senha</button></div>
+   <div class="or" id="lg-or">ou</div>
+   <div class="lg-soc">
+    <button class="soc s-g" id="lg-google" type="button"><i aria-hidden="true">G</i>Continuar com Google</button>
+    <button class="soc s-f" id="lg-facebook" type="button"><i aria-hidden="true">f</i>Continuar com Facebook</button>
+    <button class="soc s-t" id="lg-tiktok" type="button"><i aria-hidden="true"><i class=yi data-i=music></i></i>Continuar com TikTok</button>
+   </div>
+   <p class="status" id="lg-msg" style="text-align:center"></p>
+   <div class="card lg-next">
+    <b>Depois desta etapa, o que acontece:</b>
+    <ol>
+     <li><i aria-hidden="true">2</i><span><b>Confirmação do e-mail</b> — enviamos um link e a tela libera o acesso sozinha.</span></li>
+     <li><i aria-hidden="true">3</i><span><b>Perfil completo</b> — nome, endereço e contato para receber prêmios.</span></li>
+     <li><i aria-hidden="true">4</i><span><b>Participe</b> — faça tarefas, ganhe reais e escolha seus números.</span></li>
+    </ol>
+   </div>
+  </div>
+  <div class="gv-foot"><span class="gv-note">Uma conta por pessoa. O Yshippcommerce nunca pede sua senha — e a participação é 100% gratuita.</span></div>
+ </div>
+</div>
+
+<!-- ═══ CONFIRMAÇÃO PROFISSIONAL (no lugar dos alertas nativos do navegador) ═══ -->
+<div class="sup-modal" id="cf-modal" hidden>
+ <div class="colab-card" role="dialog" aria-modal="true" aria-labelledby="cf-title">
+  <div class="pnote">
+   <span class="nico" id="cf-ico">!</span>
+   <div class="nbody"><b id="cf-title">Confirmar ação</b><small>Yshippcommerce · confirmação</small></div>
+   <button class="nclose" type="button" id="cf-x" aria-label="Fechar">✕</button>
+  </div>
+  <p id="cf-msg"></p>
+  <div class="cs-act" style="margin:0">
+   <button class="btn ghost" type="button" id="cf-cancel">Cancelar</button>
+   <button class="btn" type="button" id="cf-ok">Confirmar</button>
+  </div>
+ </div>
+</div>
+
+<!-- ═══ ANUNCIAR COMO COLABORADOR · aviso em forma de notificação ═══ -->
+<div class="sup-modal" id="colab-modal" hidden>
+ <div class="colab-card" role="dialog" aria-modal="true" aria-label="Anunciar como colaborador">
+  <div class="pnote">
+   <span class="nico"><i class=yi data-i=handshake></i></span>
+   <div class="nbody"><b>Anunciar como colaborador</b><small>Yshippcommerce · parceria</small></div>
+   <button class="nclose" type="button" data-colab-close aria-label="Fechar aviso">✕</button>
+  </div>
+  <p>Divulgue seu negócio, produto ou serviço para todos os participantes da plataforma e conquiste o carimbo <b><i class=yi data-i=handshake></i> Colaborador</b>, que identifica ofertas aprovadas e de confiança na seção <b>Ofertas dos colaboradores</b>.</p>
+  <p class="hint">O processo é direto: preencha o <b>formulário guiado de 5 etapas</b> (Serviço → Missão → Prova → Resumo → Pagamento), igual ao que a equipe usa. A <b>taxa é de 30% sobre o valor total pago aos participantes</b> (recompensa × vagas) e aparece só na etapa Pagamento — se a tarefa for <b>negada</b>, a taxa é <b>devolvida</b>. A equipe revisa: se estiver tudo certo, ela é publicada; se faltar algo, você recebe um comentário para editar — e, se for negada, sempre pode <b>recorrer</b>.</p>
+  <p class="hint"><i class=yi data-i=bulb></i> Todas as taxas somam no <b><i class=yi data-i=trophy></i> Cofre Real</b>, sorteado todo fim do mês entre os participantes.</p>
+  <p class="hint"><b>Quer abrir o formulário agora ou prefere deixar para depois?</b></p>
+  <div class="cs-act" style="margin:0">
+   <button class="btn" type="button" id="colab-go">Abrir formulário de tarefa</button>
+   <button class="btn ghost" type="button" data-colab-close>Deixar para depois</button>
+  </div>
+ </div>
+</div>
+
+<!-- ═══ DISPUTA · levar o caso ao suporte com o ID da tarefa ═══ -->
+<div class="sup-modal" id="disp-modal" hidden>
+ <div class="colab-card" role="dialog" aria-modal="true" aria-label="Levar o caso ao suporte">
+  <div class="pnote">
+   <span class="nico"><i class=yi data-i=shield></i></span>
+   <div class="nbody"><b>Levar o caso ao suporte</b><small>Yshippcommerce · auditoria da equipe</small></div>
+   <button class="nclose" type="button" id="disp-close" aria-label="Fechar">✕</button>
+  </div>
+  <p>Descreva a sua suspeita de <b>má-fé na avaliação</b> (prova ignorada, correção impossível de satisfazer, negação injusta…). O caso chega à equipe <b>com o ID da tarefa</b>, o nome do colaborador e as provas que você anexou — a equipe audita e pode <b>reverter a decisão e creditar os reais</b>.</p>
+  <p class="hint" id="disp-info"></p>
+  <div class="field"><label class="label">O que aconteceu? (mínimo 10 caracteres)</label><textarea id="disp-reason" maxlength="800" placeholder="Ex.: Enviei o print correto duas vezes e a prova foi negada sem motivo…"></textarea></div>
+  <div class="cs-act" style="margin:0">
+   <button class="btn" type="button" id="disp-send">Enviar caso ao suporte <i class=yi data-i=shield></i></button>
+   <button class="btn ghost" type="button" id="disp-cancel">Cancelar</button>
+  </div>
+ </div>
+</div>
+
+<!-- FORMULÁRIO GUIADO DE TAREFA DO COLABORADOR (4 etapas, igual ao painel) -->
+<div class="sup-modal" id="cform-modal" hidden>
+ <div class="cform-box" role="dialog" aria-modal="true" aria-label="Publicar tarefa de colaborador">
+  <div class="pnote">
+   <span class="nico"><i class=yi data-i=handshake></i></span>
+   <div class="nbody"><b id="cform-title">Publicar tarefa de colaborador</b><small>Yshippcommerce · revisão da equipe</small></div>
+   <button class="nclose" type="button" id="cform-close" aria-label="Fechar formulário">✕</button>
+  </div>
+  <div class="cform-body">
+   <p class="hint">Formulário guiado em <b>5 etapas</b> — igual ao que a equipe usa: Serviço → Missão → Prova → Resumo → Pagamento. Sua tarefa vai para <b>revisão</b> e, se aprovada, é publicada na seção <b>Ofertas dos colaboradores</b> com o carimbo <i class=yi data-i=handshake></i>. A <b>taxa de publicação (30% do valor total pago aos participantes)</b> aparece só na etapa <b>Pagamento</b> — e é devolvida se a equipe negar.</p>
+   <div class="cf-steps" id="cf-steps">
+    <button type="button" class="on" data-goto="1">1 · Serviço</button>
+    <button type="button" data-goto="2">2 · Missão</button>
+    <button type="button" data-goto="3">3 · Prova</button>
+    <button type="button" data-goto="4">4 · Resumo</button>
+    <button type="button" data-goto="5">5 · Pagamento</button>
+   </div>
+
+   <!-- ETAPA 1 · SERVIÇO -->
+   <div id="cf-p1">
+    <div class="ws-h">Categoria do serviço *</div>
+    <div class="cf-cards" id="cf-cats"></div>
+    <div class="ws-h" id="cf-svcs-h" hidden>Serviço / tarefa *</div>
+    <div class="cf-cards" id="cf-svcs"></div>
+    <div class="field"><label class="label">Nome da tarefa *</label><input id="cf-name" maxlength="90" placeholder="Ex.: Seguir nosso perfil no Instagram e curtir 2 posts"></div>
+    <div class="cf-grid3">
+     <div class="field"><label class="label">Moeda do pagamento (você escolhe como pagar) *</label><select id="cf-cur"><option value="brl">Reais (R$) — padrão</option><option value="ticket">Bilhetes (1 bilhete = R$ 0,50 · trocáveis por números de sorteio)</option><option value="coin">Moedas Yshipp (10 moedas = R$ 0,01 · moeda das tarefas)</option></select></div>
+     <div class="field"><label class="label">Recompensa por participante (na moeda escolhida) *</label><input id="cf-reward" type="number" min="0.01" step="0.01" placeholder="Ex.: 0,50"></div>
+     <div class="field"><label class="label">Vagas (participantes) *</label><input id="cf-vagas" type="number" min="25" max="500" step="1" value="10"></div>
+    </div>
+    <p class="hint" id="cf-diff-line">Dificuldade: <b id="cf-diff">—</b> <small>(vem do serviço escolhido; a equipe confirma na revisão)</small></p>
+   </div>
+
+   <!-- ETAPA 2 · MISSÃO -->
+   <div id="cf-p2" hidden>
+    <div class="field"><label class="label">Missão: o que o participante deve fazer (descrição) *</label><textarea id="cf-desc" placeholder="Ex.: Siga @seunegocio, curta as 2 últimas publicações e comente de verdade na mais recente."></textarea></div>
+    <div class="field"><label class="label">Etapas da missão (uma por linha) *</label><textarea id="cf-steps-in" rows="5" placeholder="Acesse o link&#10;Siga o perfil&#10;Curta as 2 últimas publicações"></textarea></div>
+    <div class="field"><label class="label">Regras da tarefa (uma por linha — numeradas automaticamente) *</label><textarea id="cf-rules-in" rows="5" placeholder="Cadastre-se pelo link desta tarefa&#10;Utilize seus próprios dados&#10;Faça apenas um cadastro&#10;Cadastros duplicados ou falsos serão recusados"></textarea></div>
+    <div class="field"><label class="label">Requisitos (opcional · separe com · ou linha nova)</label><input id="cf-req-in" placeholder="Ex.: conta ativa no serviço · maior de 18 anos"></div>
+    <div class="field"><label class="label">Informações adicionais (opcional)</label><textarea id="cf-extra" rows="2" placeholder="Contexto e avisos que não são regras"></textarea></div>
+    <div class="field"><label class="label">Prazo de avaliação dos comprovantes (dias)</label><input id="cf-review" type="number" min="1" max="30" value="3"></div>
+    <div class="field"><label class="label">Link da tarefa</label><input id="cf-link" placeholder="https://… (perfil, página, loja, vídeo…)"></div>
+   </div>
+
+   <!-- ETAPA 3 · PROVA -->
+   <div id="cf-p3" hidden>
+    <p class="hint">Quais comprovantes o participante deve enviar? Marque o que a sua tarefa exige — dificuldades intermediária/avançada pedem <b>pelo menos 2 tipos</b>.</p>
+    <div class="cf-checks">
+     <label class="cf-check"><input type="checkbox" id="cf-pt" checked><span><i class=yi data-i=note></i> Texto</span></label>
+     <label class="cf-check"><input type="checkbox" id="cf-pc"><span><i class=yi data-i=key></i> Código / cupom</span></label>
+     <label class="cf-check"><input type="checkbox" id="cf-pi" checked><span><i class=yi data-i=image></i> Print (link da imagem)</span></label>
+     <label class="cf-check"><input type="checkbox" id="cf-pv"><span><i class=yi data-i=video></i> Gravação de tela (link)</span></label>
+     <label class="cf-check"><input type="checkbox" id="cf-pd"><span><i class=yi data-i=clock></i> Data e hora</span></label>
+    </div>
+    <div class="field"><label class="label">Mínimo de provas para aprovar</label><select id="cf-min"><option value="1">1 prova</option><option value="2">2 provas</option><option value="3">3 provas</option><option value="4">4 provas</option></select></div>
+    <div class="field"><label class="label">Detalhes da prova: explique como o participante deve comprovar *</label><textarea id="cf-proof" placeholder="Ex.: print do perfil seguido com o @ aparecendo e link direto da imagem."></textarea></div>
+   </div>
+
+   <!-- ETAPA 4 · RESUMO -->
+   <div id="cf-p4" hidden>
+    <div class="cf-summary" id="cf-summary"></div>
+    <div class="field" id="cf-note-wrap"><label class="label">Mensagem para a equipe (opcional — use ao recorrer ou corrigir)</label><textarea id="cf-note" placeholder="Alguma observação sobre a sua tarefa?"></textarea></div>
+   </div>
+
+   <!-- ETAPA 5 · PAGAMENTO -->
+   <div id="cf-p5" hidden>
+    <div class="cf-fee">
+     <div class="ws-h"><i class=yi data-i=safe></i> Pagamento da publicação</div>
+     <div id="cf-pay"></div>
+    </div>
+    <p class="hint">A taxa vai para o <b><i class=yi data-i=trophy></i> Cofre Real</b> — todo fim do mês o total acumulado é sorteado entre os participantes (número de 1 a 1000). Se a sua tarefa for negada, a taxa é <b>devolvida</b> para a sua carteira.</p>
+   </div>
+
+   <div class="actions" style="margin:0">
+    <button class="btn ghost" type="button" id="cf-prev" hidden>← Voltar</button>
+    <button class="btn" type="button" id="cf-next">Continuar →</button>
+    <button class="btn" type="button" id="cf-save" hidden>Enviar para revisão <i class=yi data-i=handshake></i></button>
+    <button class="btn ghost" type="button" id="cform-cancel">Cancelar</button>
+   </div>
+  </div>
+  <div id="clv-enviadas" hidden>
+   <div class="ws-h">Minhas tarefas enviadas</div>
+   <div id="cform-mine" class="cform-mine"></div>
+  </div>
+ </div>
+</div>
+
+<!-- ═══ CENTRAL DO COLABORADOR · gaveta em TELA CHEIA p/ avaliar as provas ═══ -->
+<div class="gaveta" id="claveta" role="dialog" aria-modal="true" aria-label="Central do colaborador">
+ <div class="gav clg" id="clav">
+  <div class="gv-top">
+   <span class="gv-ico" aria-hidden="true"><i class=yi data-i=handshake></i></span>
+   <div><b>Central do colaborador</b><small>TUDO DO COLABORADOR · ANUNCIAR OFERTAS E INSPECIONAR PROVAS</small></div>
+   <button class="ib sm" type="button" id="clv-x" aria-label="Fechar central">✕</button>
+  </div>
+  <div class="adc-shell">
+   <nav class="adc-menu" id="clv-tabs" aria-label="Seções da Central do Colaborador"></nav>
+   <div class="adc-main">
+    <div class="clv-body">
+     <div id="clv-anunciar" hidden></div>
+     <div id="clv-tasksel"></div>
+     <div id="clv-list"></div>
+    </div>
+    <div class="clv-stats" id="clv-stats"></div>
+   </div>
+  </div>
+  <div class="gv-foot">
+   <span class="gv-note"><i class=yi data-i=checkc></i> Aprovar credita os reais na carteira do participante na hora · <i class=yi data-i=edit></i> Pedir correção devolve a prova para ele reenviar · <i class=yi data-i=ban></i> Negar registra o motivo — e o participante pode levar o caso ao suporte com o ID da tarefa (a equipe audita).</span>
+  </div>
+ </div>
+</div>
+
+<!-- ═══ YSHIPP APPHUB · central de aplicativos parceiros (tela cheia) ═══ -->
+<div class="gaveta" id="appgaveta" role="dialog" aria-modal="true" aria-label="Yshipp AppHub">
+ <div class="gav clg" id="appv">
+  <div class="gv-top">
+   <span class="gv-ico" aria-hidden="true"><i class=yi data-i=mobile></i></span>
+   <div><b>Yshipp AppHub</b><small>APLICATIVOS PARCEIROS · INSTALE, COMPLETE ATIVIDADES E GANHE</small></div>
+   <button class="ib sm" type="button" id="ah-x" aria-label="Fechar AppHub">✕</button>
+  </div>
+  <div class="adc-shell">
+   <nav class="adc-menu" id="ah-tabs" aria-label="Seções do AppHub"></nav>
+   <div class="adc-main">
+    <div class="clv-body">
+     <div id="ah-body"></div>
+    </div>
+    <div class="clv-stats" id="ah-stats"></div>
+   </div>
+  </div>
+  <div class="gv-foot">
+   <span class="gv-note"><i class=yi data-i=shield></i> A instalação é confirmada pela equipe após a prova · as atividades só liberam depois da instalação aprovada · cada recompensa é creditada na carteira (reais, bilhetes, moedas ou diamantes) e os extras (pacotes, mineração e buffs) são entregues pela equipe.</span>
+  </div>
+ </div>
+</div>
+
+<!-- ═══ ANÚNCIO PATROCINADO · gaveta recriada do zero ═══ -->
+<div class="gaveta" id="gaveta" role="dialog" aria-modal="false" aria-label="Anúncio patrocinado">
+ <div class="gav" id="gav">
+  <span class="gv-bar" id="gv-bar"></span>
+  <div class="gv-top">
+   <span class="gv-ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg></span>
+   <div><b>Anúncio patrocinado</b><small id="gv-brand">Yshippcommerce · propaganda</small></div>
+   <button class="ib sm" type="button" id="gv-x" aria-label="Fechar anúncio">✕</button>
+  </div>
+  <div class="gv-timer">Aguarde <b id="gv-secs">—</b> <span id="gv-reward">para receber —</span></div>
+  <div class="gv-stage">
+   <iframe id="gv-frame" title="Conteúdo do anúncio" referrerpolicy="no-referrer" sandbox="allow-scripts allow-forms allow-popups allow-modals"></iframe>
+  </div>
+  <div class="gv-foot">
+   <span class="gv-note" id="gv-note">Mantenha o anúncio aberto até o fim da contagem para receber a recompensa.</span>
+   <button class="btn sm ghost" type="button" id="gv-skip">Fechar sem recompensa</button>
+   <button class="btn sm" type="button" id="gv-collect" hidden>Coletar reais</button>
+  </div>
+ </div>
+</div>
+
+<!-- ═══ CENTRAL DE ANÚNCIOS YSHIPPCOMMERCE · gaveta tela cheia ═══ -->
+<div class="gaveta" id="adcveta" role="dialog" aria-modal="true" aria-label="Central de anúncios">
+ <div class="gav clg" id="adcav">
+  <div class="gv-top">
+   <span class="gv-ico" aria-hidden="true"><i class=yi data-i=megaphone></i></span>
+   <div><b>Central de anúncios</b><small>ANUNCIAR · FERRAMENTAS · MONETIZAÇÃO YSHIPPCOMMERCE</small></div>
+   <button class="ib sm" type="button" id="adc-x" aria-label="Fechar central">✕</button>
+  </div>
+  <div class="adc-shell">
+   <nav class="adc-menu" id="adc-tabs" aria-label="Seções da Central de Anúncios"></nav>
+   <div class="adc-main">
+    <div class="clv-body" id="adc-body"></div>
+    <div class="clv-stats" id="adc-stats"></div>
+   </div>
+  </div>
+ </div>
+</div>
+
+<!-- ═══ MINI-CURSO DA FERRAMENTA · gaveta tela cheia ═══ -->
+<div class="gaveta" id="adctool" role="dialog" aria-modal="true" aria-label="Mini-curso da ferramenta">
+ <div class="gav" id="adctv">
+  <div class="gv-top">
+   <span class="gv-ico" id="adct-ico" aria-hidden="true"><i class=yi data-i=toolbox></i></span>
+   <div><b id="adct-name">Ferramenta</b><small>MINI-CURSO INDICADO PELA ADMINISTRAÇÃO</small></div>
+   <button class="ib sm" type="button" id="adct-x" aria-label="Fechar">✕</button>
+  </div>
+  <div class="gv-stage" style="grid-template-rows:minmax(200px,1fr)"><div id="adct-stage" style="min-height:200px"></div></div>
+  <div class="gv-foot">
+   <span class="gv-note" id="adct-note">Conteúdo escolhido pela equipe Yshippcommerce.</span>
+   <button class="btn sm" type="button" id="adct-open" hidden>Abrir ferramenta <i class=yi data-i=external></i></button>
+  </div>
+ </div>
+</div>
+
+<!-- ═══ PESQUISA PAGA · leitor em tela cheia (participação sempre voluntária) ═══ -->
+<div class="gaveta" id="pesgaveta" role="dialog" aria-modal="true" aria-label="Pesquisa paga">
+ <div class="gav" id="pesv">
+  <div class="gv-top">
+   <span class="gv-ico" id="pes-ico" aria-hidden="true"><i class=yi data-i=flask></i></span>
+   <div><b id="pes-name">Pesquisa paga</b><small id="pes-sub">RESPONDA E GANHE REAIS · PARTICIPAÇÃO VOLUNTÁRIA</small></div>
+   <button class="ib sm" type="button" id="pes-x" aria-label="Fechar pesquisa">✕</button>
+  </div>
+  <div class="gv-scroll" id="pes-body"></div>
+ </div>
+</div>
+
+<!-- ═══ CRIAR PESQUISA PAGA · formulário guiado em tela cheia ═══ -->
+<div class="gaveta" id="pescgaveta" role="dialog" aria-modal="true" aria-label="Criar pesquisa paga">
+ <div class="gav" id="pescv">
+  <div class="gv-top">
+   <span class="gv-ico" aria-hidden="true"><i class=yi data-i=flask></i></span>
+   <div><b>Criar pesquisa paga</b><small>CATEGORIAS · Perguntas · Pergunta isca · Vagas</small></div>
+   <button class="ib sm" type="button" id="pesc-x" aria-label="Fechar">✕</button>
+  </div>
+  <div class="gv-scroll" id="pesc-body"></div>
+ </div>
+</div>
+
+<!-- ═══ CRIAR ANÚNCIO PAGO · tela própria por formato (banner/link/vídeo) ═══ -->
+<div class="gaveta" id="adcngaveta" role="dialog" aria-modal="true" aria-label="Criar anúncio pago">
+ <div class="gav" id="adcnv">
+  <div class="gv-top">
+   <span class="gv-ico" aria-hidden="true"><i class=yi data-i=megaphone></i></span>
+   <div><b id="adcn-title">Criar anúncio pago</b><small id="adcn-sub">FORMATO · DURAÇÃO · CONTEÚDO · PUBLICAÇÃO</small></div>
+   <button class="ib sm" type="button" id="adcn-x" aria-label="Fechar">✕</button>
+  </div>
+  <div class="gv-scroll" id="adcn-body"></div>
+ </div>
+</div>
+
+<!-- ═══ CENTRAL DE PESQUISAS PAGAS · tela cheia própria ═══ -->
+<div class="gaveta" id="pescmgaveta" role="dialog" aria-modal="true" aria-label="Central de Pesquisas Pagas">
+ <div class="gav clg" id="pescm">
+  <div class="gv-top">
+   <span class="gv-ico" aria-hidden="true"><i class=yi data-i=flask></i></span>
+   <div><b>Central de Pesquisas Pagas</b><small>RESPONDA · GANHE REAIS · PARTICIPAÇÃO VOLUNTÁRIA</small></div>
+   <button class="ib sm" type="button" id="pescm-x" aria-label="Fechar central">✕</button>
+  </div>
+  <div class="adc-shell">
+   <nav class="adc-menu" id="pescm-tabs" aria-label="Seções da Central de Pesquisas"></nav>
+   <div class="adc-main">
+    <div class="clv-body" id="pescm-body"></div>
+   </div>
+  </div>
+ </div>
+</div>
+
+<!-- ═══ YSHIPPCOMMERCE MARKET · loja em tela cheia ═══ -->
+<div class="gaveta" id="mktgaveta" role="dialog" aria-modal="true" aria-label="Yshippcommerce Market">
+ <div class="gav clg" id="mktv">
+  <div class="gv-top">
+   <span class="gv-ico" aria-hidden="true"><i class=yi data-i=cart></i></span>
+   <div><b>Yshippcommerce Market</b><small>PACOTES · MINERAÇÃO · BUFFS · RECARGAS EM REAIS</small></div>
+   <button class="ib sm" type="button" id="mkt-x" aria-label="Fechar Market">✕</button>
+  </div>
+  <div class="adc-shell">
+   <nav class="adc-menu" id="mkt-tabs" aria-label="Setores do Market"></nav>
+   <div class="adc-main">
+    <div class="clv-body" id="mkt-body"></div>
+    <div class="clv-stats" id="mkt-stats"></div>
+   </div>
+  </div>
+ </div>
+</div>
+
+<!-- ═══ YSHIPPCOMMERCE WALLET · carteira completa estilo Binance ═══ -->
+<div class="gaveta" id="walgaveta" role="dialog" aria-modal="true" aria-label="Carteira e conversão">
+ <div class="gav clg" id="walv">
+  <div class="gv-top">
+   <span class="gv-ico" aria-hidden="true"><i class=yi data-i=coins></i></span>
+   <div><b>YshippWallet</b><small>REAIS · CRIPTOMOEDAS · CONVERSÃO · SAQUE PIX</small></div>
+   <button class="ib sm" type="button" id="wal-x" aria-label="Fechar carteira">✕</button>
+  </div>
+  <div class="adc-shell">
+   <nav class="adc-menu" id="wal-tabs" aria-label="Seções da carteira"></nav>
+   <div class="adc-main">
+    <div class="clv-body" id="wal-body"></div>
+    <div class="clv-stats" id="wal-stats"></div>
+   </div>
+  </div>
+ </div>
+</div>
+
+<!-- ═══ MINA DE BILHETES · central de mineração em tela cheia ═══ -->
+<div class="gaveta" id="mngaveta" role="dialog" aria-modal="true" aria-label="Mina de Reais">
+ <div class="gav clg" id="mnv">
+  <div class="gv-top">
+   <span class="gv-ico" aria-hidden="true"><i class=yi data-i=hammer></i></span>
+   <div><b>Mina de Reais</b><small>PLANOS ATIVOS · RENDIMENTO · COLETA DOS RENDIMENTOS</small></div>
+   <button class="ib sm" type="button" id="mn-x" aria-label="Fechar Mina de Reais">✕</button>
+  </div>
+  <div class="adc-shell">
+   <nav class="adc-menu" id="mn-tabs" aria-label="Seções da Mina de Reais"></nav>
+   <div class="adc-main">
+    <div class="clv-body" id="mn-body"></div>
+    <div class="clv-stats" id="mn-stats"></div>
+   </div>
+  </div>
+ </div>
+</div>
+
+<!-- ═══ FORJA DE BUFFS · central de buffs em tela cheia ═══ -->
+<div class="gaveta" id="fjgaveta" role="dialog" aria-modal="true" aria-label="Forja de Buffs">
+ <div class="gav clg" id="fjv">
+  <div class="gv-top">
+   <span class="gv-ico" aria-hidden="true"><i class=yi data-i=bolt></i></span>
+   <div><b>Forja de Buffs</b><small>TURBINOS ATIVOS · FORÇA · TEMPO RESTANTE</small></div>
+   <button class="ib sm" type="button" id="fj-x" aria-label="Fechar Forja de Buffs">✕</button>
+  </div>
+  <div class="adc-shell">
+   <nav class="adc-menu" id="fj-tabs" aria-label="Seções da Forja de Buffs"></nav>
+   <div class="adc-main">
+    <div class="clv-body" id="fj-body"></div>
+    <div class="clv-stats" id="fj-stats"></div>
+   </div>
+  </div>
+ </div>
+</div>
+
+<!-- ═══ CENTRAL DE EVENTOS · tela cheia ═══ -->
+<div class="gaveta" id="evtgaveta" role="dialog" aria-modal="true" aria-label="Central de Eventos">
+ <div class="gav clg" id="evtv">
+  <div class="gv-top">
+   <span class="gv-ico" aria-hidden="true"><i class=yi data-i=calendar></i></span>
+   <div><b>Central de Eventos</b><small>CADA EVENTO COM SUAS TAREFAS, SORTEIOS E LEILÕES</small></div>
+   <button class="ib sm" type="button" id="evt-x" aria-label="Fechar Central de Eventos">✕</button>
+  </div>
+  <div class="adc-shell">
+   <nav class="adc-menu" id="evt-tabs" aria-label="Seções da Central de Eventos"></nav>
+   <div class="adc-main">
+    <div class="clv-body">
+     <div style="display:flex;justify-content:flex-end;gap:6px;padding:12px 16px 0">
+      <button class="ib sm" id="evprev" aria-label="Evento anterior">‹</button>
+      <button class="ib sm" id="evnext" aria-label="Próximo evento">›</button>
+     </div>
+     <div class="evs" id="evs"></div>
+    </div>
+    <div class="clv-stats" id="evt-stats"></div>
+   </div>
+  </div>
+ </div>
+</div>
+
+<!-- ═══ CENTRAL DE AFILIADOS · grupos de divulgação em fila ═══ -->
+<div class="gaveta" id="affgaveta" role="dialog" aria-modal="true" aria-label="Central de Engajamento Coletivo">
+ <div class="gav clg" id="affv">
+  <div class="gv-top">
+   <span class="gv-ico" aria-hidden="true">🤝</span>
+   <div><b>Central de Engajamento Coletivo</b><small>GRUPOS COLABORATIVOS POR CATEGORIA · FILA INTELIGENTE · RODADAS DIÁRIAS</small></div>
+   <button class="ib sm" type="button" id="aff-x" aria-label="Fechar Central de Engajamento Coletivo">✕</button>
+  </div>
+  <div class="adc-shell">
+   <nav class="adc-menu" id="aff-tabs" aria-label="Seções da Central de Engajamento Coletivo"></nav>
+   <div class="adc-main">
+    <div class="clv-body" id="aff-body"></div>
+    <div class="clv-stats" id="aff-stats"></div>
+   </div>
+  </div>
+ </div>
+</div>
+
+<!-- ═══ CENTRAL DE MEMBROS VIP · dedicação diária, caixa compartilhado ═══ -->
+<div class="gaveta" id="vipgaveta" role="dialog" aria-modal="true" aria-label="Central de Membros VIP">
+ <div class="gav clg" id="vipv">
+  <div class="gv-top">
+   <span class="gv-ico" aria-hidden="true"><i class=yi data-i=star></i></span>
+   <div><b>Central de Membros VIP</b><small>CHECK-IN + 5 TAREFAS POR DIA · CAIXA COMPARTILHADO · BENEFÍCIOS</small></div>
+   <button class="ib sm" type="button" id="vip-x" aria-label="Fechar Central de Membros VIP">✕</button>
+  </div>
+  <div class="adc-shell">
+   <div class="adc-main">
+    <div class="clv-body" id="vip-body"></div>
+   </div>
+  </div>
+ </div>
+</div>
+
+<!-- ═══ TELA DE PAGAMENTO · PIX QR CODE ═══ -->
+<div class="gaveta" id="paygaveta" role="dialog" aria-modal="true" aria-label="Pagamento">
+ <div class="gav" id="payv">
+  <div class="gv-top">
+   <span class="gv-ico" aria-hidden="true"><i class=yi data-i=safe></i></span>
+   <div><b id="pay-name">Pagamento</b><small>PIX QR CODE · CONFIRMAÇÃO PELA ADMINISTRAÇÃO</small></div>
+   <button class="ib sm" type="button" id="pay-x" aria-label="Fechar pagamento">✕</button>
+  </div>
+  <div class="gv-scroll" id="pay-body"></div>
+ </div>
+</div>
+
+<!-- ═══ VISUALIZADOR DE ANÚNCIO PAGO · rotação automática, tela cheia ═══ -->
+<div class="gaveta" id="adcvw" role="dialog" aria-modal="true" aria-label="Anúncio patrocinado pago">
+ <div class="gav" id="adcwv">
+  <div class="gv-bar" id="adcv-bar"></div>
+  <div class="gv-top">
+   <span class="gv-ico" aria-hidden="true"><i class=yi data-i=megaphone></i></span>
+   <div><b id="adcv-brand">Anúncio patrocinado</b><small>PAGO POR UM ANUNCIANTE · ELE AJUDA A FINANCIAR OS SORTEIOS</small></div>
+   <button class="ib sm" type="button" id="adcv-x" aria-label="Fechar anúncio" disabled>✕</button>
+  </div>
+  <div class="gv-timer">Visualização obrigatória: <b id="adcv-secs">…</b></div>
+  <div class="gv-stage" style="grid-template-rows:minmax(160px,1fr)"><div id="adcv-stage" style="min-height:200px"></div></div>
+  <div class="gv-foot">
+   <span class="gv-note" id="adcv-note">Este anúncio não gera reais — é pago pelo anunciante e fortalece o Cofre dos sorteios.</span>
+   <button class="btn sm ghost" type="button" id="adcv-open" hidden>Abrir anúncio <i class=yi data-i=external></i></button>
+  </div>
+ </div>
+</div>
+
+<!-- ═══ CARTEIRA FLUTUANTE (botão no canto inferior direito) ═══ -->
+<button class="wfloat" id="wfloat" hidden aria-label="Abrir carteira de reais" aria-expanded="false" title="Minha carteira de reais">
+ <svg viewBox="0 0 24 24" width="27" height="27" aria-hidden="true"><path d="M3 8a2 2 0 0 0 2-2h12a2 2 0 0 1 2 2v1a2.5 2.5 0 0 0 0 5v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1a2.5 2.5 0 0 0 0-5z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M14.5 7v9.5" stroke="currentColor" stroke-width="1.8" stroke-dasharray="2.5 3"/></svg>
+ <span class="wbadge" id="wbadge">0</span>
+</button>
+
+<!-- ═══ MENU COMPLETO (largo e organizado por grupos) ═══ -->
+<div class="sheet menu" id="menu-sheet" hidden>
+ <div class="sheet-bg" data-close></div>
+ <div class="sheet-p menu-p" role="dialog" aria-modal="true" aria-label="Menu">
+  <div class="sheet-h"><span class="grab" aria-hidden="true"></span><b>Menu</b><button class="ib sm" type="button" data-close aria-label="Fechar menu">✕</button></div>
+  <div class="sheet-b">
+   <div class="mgrid">
+    <div class="mgrp"><span class="mgl">Participar</span>
+     <a class="mi" href="#premios"><span class="mic"><span class="icn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M5 12v7a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-7M3 8l2-3.5h14L21 8"/></svg></span></span><span><b>Prêmios</b><small>Tudo o que está em jogo</small></span></a>
+     <a class="mi" href="#sorteios"><span class="mic"><span class="icn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8a2 2 0 0 0 2-2h12a2 2 0 0 1 2 2v1a2.5 2.5 0 0 0 0 5v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1a2.5 2.5 0 0 0 0-5z"/><path d="M14.5 7v9.5" stroke-dasharray="2.5 3"/></svg></span></span><span><b>Sorteios</b><small>Escolha seus números</small></span></a>
+     <a class="mi" href="#resumo"><span class="mic"><span class="icn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="4.5" width="17" height="16" rx="2.5"/><path d="M8 3v4M16 3v4M3.5 10h17M8 14h3"/></svg></span></span><span><b>Eventos</b><small>Central de oportunidades</small></span></a>
+     <a class="mi" href="#ofertas"><span class="mic"><span class="icn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4.5 13.5H11L9.5 22 18 10.5h-6.5z"/></svg></span></span><span><b>Ofertas</b><small>Ganhe reais extras</small></span></a>
+     <a class="mi" href="#leiloes"><span class="mic"><span class="icn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3M8 6h8M7 21h10M9.5 9.5a3.5 3.5 0 0 1 7 0c0 2-1.5 3-3.5 4-2-1-3.5-2-3.5-4zM9.5 13.5 7 17h10l-2.5-3.5"/></svg></span></span><span><b>Leilões</b><small>Dê seus lances</small></span></a>
+    </div>
+    <div class="mgrp"><span class="mgl">Centrais</span>
+     <button class="mi" type="button" id="mnc-adc"><span class="mic"><span class="icn"><i class=yi data-i=megaphone></i></span></span><span><b>Central de Anúncios</b><small>Anuncie, ferramentas e monetização</small></span></button>
+     <button class="mi" type="button" id="mnc-mn"><span class="mic"><span class="icn"><i class=yi data-i=hammer></i></span></span><span><b>Mina de Reais</b><small>Planos, rendimento e coleta</small></span></button>
+     <button class="mi" type="button" id="mnc-fj"><span class="mic"><span class="icn"><i class=yi data-i=bolt></i></span></span><span><b>Forja de Buffs</b><small>Turbinos ativos e à venda</small></span></button>
+     <button class="mi" type="button" id="mnc-evt"><span class="mic"><span class="icn"><i class=yi data-i=calendar></i></span></span><span><b>Central de Eventos</b><small>Tarefas, sorteios e leilões</small></span></button>
+     <button class="mi" type="button" id="mnc-vip"><span class="mic"><span class="icn"><i class=yi data-i=star></i></span></span><span><b>Membros VIP</b><small>Dedicação diária · caixa compartilhado</small></span></button>
+     <button class="mi" type="button" id="mnc-clv"><span class="mic"><span class="icn"><i class=yi data-i=handshake></i></span></span><span><b>Central do Colaborador</b><small>Suas ofertas e avaliação de provas</small></span></button>
+     <button class="mi" type="button" id="mnc-wal"><span class="mic"><span class="icn"><i class=yi data-i=coins></i></span></span><span><b>Carteira</b><small>YshippWallet completa · reais e cripto</small></span></button>
+     <button class="mi" type="button" id="mnc-sup"><span class="mic"><span class="icn"><i class=yi data-i=headset></i></span></span><span><b>Central de Ajuda</b><small>Suporte e perguntas frequentes</small></span></button>
+    </div>
+    <div class="mgrp"><span class="mgl">Minha conta</span>
+     <button class="mi" type="button" data-conta="1"><span class="mic"><span class="icn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg></span></span><span><b>Minha conta</b><small>Perfil, carteira e segurança</small></span></button>
+    </div>
+<!-- ═══ GAVETA MINHA CONTA · tela cheia, com cabeçalho próprio ═══ -->
+<div class="gaveta" id="cgaveta" role="dialog" aria-modal="true" aria-label="Minha conta">
+ <div class="gav" id="cgav">
+  <div class="gv-top">
+   <span class="gv-ico" aria-hidden="true"><i class=yi data-i=user></i></span>
+   <div><b>Minha conta</b><small>PERFIL · CARTEIRA E SEGURANÇA</small></div>
+   <button class="ib sm" type="button" id="c-x" aria-label="Fechar minha conta">✕</button>
+  </div>
+  <div class="gv-scroll">
+   <div class="m-acct" id="m-acct"></div>
+   <div class="mgrid">
+     <button class="mi" type="button" data-open="profile"><span class="mic"><span class="icn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg></span></span><span><b>Meu perfil</b><small>Dados pessoais e segurança</small></span></button>
+     <button class="mi" type="button" data-open="wallet"><span class="mic"><span class="icn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="6" width="19" height="13" rx="3"/><path d="M2.5 10h19" opacity=".55"/><circle cx="17" cy="13.5" r="1.4" fill="currentColor" stroke="none"/></svg></span></span><span><b>Carteira</b><small>Saldo, ativos e histórico</small></span></button>
+     <a class="mi" href="#bilhete"><span class="mic"><span class="icn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8a2 2 0 0 0 2-2h12a2 2 0 0 1 2 2v1a2.5 2.5 0 0 0 0 5v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1a2.5 2.5 0 0 0 0-5z"/><path d="M14.5 7v9.5" stroke-dasharray="2.5 3"/></svg></span></span><span><b>Meus números</b><small>Seus números e situação</small></span></a>
+     <a class="mi" href="#participar"><span class="mic"><span class="icn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 15c-1.5-1.5-2-3.5-2-5.5L12 2l9 7.5c0 2-.5 4-2 5.5-2.5 2.5-6.5 3-9 1-2.5 2-6.5 1.5-9-1z"/></svg></span></span><span><b>Participar agora</b><small>Passo a passo guiado</small></span></a>
+     <button class="mi" type="button" data-open="notes"><span class="mic"><span class="icn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 8-3 8h18s-3-1-3-8"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></span></span><span><b>Notificações<span class="clv-badge" id="nt-menu-badge" hidden>0</span></b><small>Central · avisos e preferências</small></span></button>
+    <button class="mi" type="button" data-collab="1"><span class="mic"><span class="icn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6M9 10h.01M15 10h.01"/></svg></span></span><span><b>Anunciar como colaborador</b><small>Publique ofertas do seu negócio</small></span></button>
+     <button class="mi" type="button" data-clv="1"><span class="mic"><span class="icn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span></span><span><b>Central do colaborador<span class="clv-badge" id="clv-menu-badge" hidden>0</span></b><small>· avalie provas inspecione e pague</small></span></button>
+   </div>
+   </div><!-- /gv-scroll -->
+  </div><!-- /gav -->
+ </div><!-- /#cgaveta -->
+    <div class="mgrp"><span class="mgl">Acompanhar e ajuda</span>
+     <a class="mi" href="#resultado"><span class="mic"><span class="icn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4h10v4a5 5 0 0 1-10 0zM9 20h6M12 13v7M17 5h3.5a3.5 3.5 0 0 1-3.5 7M7 5H3.5A3.5 3.5 0 0 0 7 12"/></svg></span></span><span><b>Resultado oficial</b><small>Ganhadores e disputas</small></span></a>
+     <a class="mi" href="#sorteios"><span class="mic"><span class="icn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-6 4 3 5-7 4 4"/><path d="M3 21h18"/></svg></span></span><span><b>Ao vivo</b><small>Últimas participações</small></span></a>
+     <a class="mi" href="#como"><span class="mic"><span class="icn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m16 8-2.5 5.5L8 16l2.5-5.5z"/></svg></span></span><span><b>Como funciona</b><small>Quatro etapas gratuitas</small></span></a>
+     <a class="mi" href="#suporte" id="nav-sup-faq"><span class="mic"><span class="icn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.3a2.6 2.6 0 0 1 5 1c0 1.7-2.5 2.2-2.5 3.7"/><circle cx="12" cy="17" r=".4" fill="currentColor" stroke="none"/></svg></span></span><span><b>Ajuda e perguntas</b><small>Central de dúvidas e FAQ</small></span></a>
+     <a class="mi" href="#suporte" id="nav-sup"><span class="mic"><span class="icn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13a8 8 0 0 1 16 0"/><rect x="3" y="13" width="4" height="6" rx="2"/><rect x="17" y="13" width="4" height="6" rx="2"/><path d="M19 19a4 4 0 0 1-4 2h-2"/></svg></span></span><span><b>Suporte</b><small>Fale com a equipe</small></span></a>
+     <button class="mi" type="button" data-fb-open="geral"><span class="mic"><span class="icn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5h16v11H12l-5 4v-4H4z"/><path d="M8.5 9.5h7M8.5 12.5h5"/></svg></span></span><span><b>Feedback</b><small>Avalie, sugira ou relate problemas</small></span></button>
+     <button class="mi" type="button" data-terms="1"><span class="mic"><span class="icn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4.5" y="10.5" width="15" height="10" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/><circle cx="12" cy="15.5" r="1.3" fill="currentColor" stroke="none"/></svg></span></span><span><b>Termos e permissões</b><small>Privacidade e segurança</small></span></button>
+    </div>
+   </div>
+  </div>
+ </div>
+</div>
+
+<!-- ═══ CARTEIRA (visão de ativos, estilo corretora) ═══ -->
+<div class="sheet" id="wallet-sheet" hidden>
+ <div class="sheet-bg" data-close></div>
+ <div class="sheet-p" role="dialog" aria-modal="true" aria-labelledby="wl-title">
+  <div class="sheet-h"><span class="grab" aria-hidden="true"></span><b id="wl-title"><span class="icn" aria-hidden="true" style="width:15px;height:15px;vertical-align:-2px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8a2 2 0 0 0 2-2h12a2 2 0 0 1 2 2v1a2.5 2.5 0 0 0 0 5v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1a2.5 2.5 0 0 0 0-5z"/><path d="M14.5 7v9.5" stroke-dasharray="2.5 3"/></svg></span> Saldo (R$)</b><button class="ib sm" type="button" data-close aria-label="Fechar carteira">✕</button></div>
+  <div class="sheet-b" id="wl-body"></div>
+ </div>
+</div>
+
+<!-- ═══ CENTRAL DE NOTIFICAÇÕES (tela cheia, categorias, histórico e preferências) ═══ -->
+<div class="sheet" id="notes-sheet" hidden>
+ <div class="sheet-bg" data-close></div>
+ <div class="sheet-p" role="dialog" aria-modal="true" aria-labelledby="nt-title">
+  <div class="sheet-h"><span class="grab" aria-hidden="true"></span><b id="nt-title"><i class=yi data-i=megaphone></i> Central de Notificações</b><button class="ib sm" type="button" data-close aria-label="Fechar notificações">✕</button></div>
+  <div class="sheet-b" id="nt-body"></div>
+ </div>
+</div>
+
+<!-- ═══ CENTRAL DE FEEDBACK (avaliações, sugestões, reclamações e problemas) ═══ -->
+<div class="sheet" id="feedback-sheet" hidden>
+ <div class="sheet-bg" data-close></div>
+ <div class="sheet-p" role="dialog" aria-modal="true" aria-labelledby="fb-title">
+  <div class="sheet-h"><span class="grab" aria-hidden="true"></span><b id="fb-title"><i class=yi data-i=chat></i> Central de Feedback</b><button class="ib sm" type="button" data-close aria-label="Fechar feedback">✕</button></div>
+  <div class="sheet-b">
+   <p class="hint" style="margin:0 0 14px">Sua opinião ajuda o Yshippcommerce a melhorar. Avalie, sugira, reclame ou relate problemas — a equipe lê tudo pelo painel.</p>
+   <form id="fb-form" onsubmit="return false" style="display:grid;gap:12px">
+    <div class="field"><label>Seção avaliada</label><select id="fb-section"></select></div>
+    <div class="field"><label>Tipo de relato</label>
+     <select id="fb-type">
+      <option value="avaliacao">Avaliação</option>
+      <option value="sugestao">Sugestão</option>
+      <option value="reclamacao">Reclamação</option>
+      <option value="problema">Relato de problema</option>
+     </select>
+    </div>
+    <div class="field"><label>Nota (opcional · 1 a 5)</label>
+     <select id="fb-rating">
+      <option value="0">— sem nota</option>
+      <option value="1">1 ★</option><option value="2">2 ★</option><option value="3">3 ★</option><option value="4">4 ★</option><option value="5">5 ★</option>
+     </select>
+    </div>
+    <div class="field"><label>Mensagem</label><textarea id="fb-msg" style="min-height:120px" maxlength="2000" placeholder="Escreva com clareza o que você quer avaliar, sugerir ou relatar…"></textarea></div>
+    <button class="btn" type="submit" id="fb-send">Enviar feedback</button>
+    <p class="status" id="fb-status" hidden></p>
+   </form>
+  </div>
+ </div>
+</div>
+
+<!-- ═══ COFRE REAL (tela cheia: acumulado, origem, histórico, regras e número da sorte) ═══ -->
+<div class="sheet" id="cofire-sheet" hidden>
+ <div class="sheet-bg" data-close></div>
+ <div class="sheet-p" role="dialog" aria-modal="true" aria-labelledby="cf2-title">
+  <div class="sheet-h"><span class="grab" aria-hidden="true"></span><b id="cf2-title"><i class=yi data-i=safe></i> Cofre Real</b><button class="ib sm" type="button" data-close aria-label="Fechar cofre">✕</button></div>
+  <div class="sheet-b" id="cf2-body"></div>
+ </div>
+</div>
+
+<!-- ═══ PERFIL PÚBLICO DO MEMBRO (tela cheia · só informações públicas) ═══ -->
+<div class="sheet" id="user-sheet" hidden>
+ <div class="sheet-bg" data-close></div>
+ <div class="sheet-p" role="dialog" aria-modal="true" aria-labelledby="up-title">
+  <div class="sheet-h"><span class="grab" aria-hidden="true"></span><b id="up-title"><i class=yi data-i=user></i> Perfil do membro</b><button class="ib sm" type="button" data-close aria-label="Fechar perfil">✕</button></div>
+  <div class="sheet-b" id="up-body"></div>
+ </div>
+</div>
+
+<!-- ═══ PERFIL DO USUÁRIO (ver e editar dados) ═══ -->
+<div class="sheet" id="profile-sheet" hidden>
+ <div class="sheet-bg" data-close></div>
+ <div class="sheet-p" role="dialog" aria-modal="true" aria-labelledby="pf-title">
+  <div class="sheet-h"><span class="grab" aria-hidden="true"></span><b id="pf-title"><i class=yi data-i=user></i> Meu perfil</b><button class="ib sm" type="button" data-close aria-label="Fechar perfil">✕</button></div>
+  <div class="sheet-b">
+   <div id="pf-head"></div>
+   <form id="pf-form" autocomplete="on" onsubmit="return false" style="display:grid;gap:12px">
+    <div class="pf-sec"><span class="pf-st">Dados pessoais</span>
+     <div class="field"><label class="label" for="pf-fbname">Nome completo</label><input id="pf-fbname" maxlength="60" placeholder="Ex.: Maria Souza" autocomplete="name"></div>
+     <div class="pf-g2">
+      <div class="field"><label class="label" for="pf-birth">Nascimento</label><input id="pf-birth" type="date" max="2026-12-31"></div>
+      <div class="field"><label class="label" for="pf-gender">Gênero</label><select id="pf-gender"></select></div>
+     </div>
+    </div>
+    <div class="pf-sec"><span class="pf-st">Contato e recebimento</span>
+     <div class="field"><label class="label" for="pf-whatsapp">WhatsApp com DDD</label><input id="pf-whatsapp" type="tel" maxlength="20" placeholder="(11) 98765-4321" autocomplete="tel-national"></div>
+     <div class="field"><label class="label" for="pf-pix">Chave Pix</label><input id="pf-pix" maxlength="120" placeholder="CPF, e-mail, telefone ou aleatória"></div>
+    </div>
+    <div class="pf-sec"><span class="pf-st">Endereço de entrega</span>
+     <div class="field"><label class="label" for="pf-street">Rua</label><input id="pf-street" maxlength="120" placeholder="Ex.: Rua das Palmeiras" autocomplete="street-address"></div>
+     <div class="pf-g2">
+      <div class="field"><label class="label" for="pf-housenum">Número</label><input id="pf-housenum" maxlength="12" inputmode="numeric" placeholder="123"></div>
+      <div class="field"><label class="label" for="pf-compl">Complemento</label><input id="pf-compl" maxlength="60" placeholder="Apto, bloco"></div>
+     </div>
+     <div class="pf-g2">
+      <div class="field"><label class="label" for="pf-uf">Estado</label><select id="pf-uf"></select></div>
+      <div class="field"><label class="label" for="pf-country">País</label><select id="pf-country"></select></div>
+     </div>
+    </div>
+    <div class="pf-sec" id="pf-pw" hidden><span class="pf-st">Segurança</span>
+     <div class="field"><label class="label" for="pf-reauth">Confirme sua senha para salvar</label><div class="pw"><input id="pf-reauth" type="password" autocomplete="current-password" placeholder="Sua senha atual"><button class="btn sm ghost" id="pf-showpw" type="button">Mostrar</button></div></div>
+     <button class="link" type="button" id="pf-forgot" style="justify-self:start;margin-top:8px">Esqueci minha senha</button>
+    </div>
+    <button class="btn wide" id="pf-save" type="button">Salvar alterações</button>
+    <p class="hint" style="margin:0;font-size:11.5px">Só o organizador vê esses dados. Na lista pública você aparece abreviado (ex.: Maria S.).</p>
+   </form>
+   <div class="pf-sec"><span class="pf-st">Mais opções de entrada</span>
+    <p class="hint" style="margin:0 0 8px">Conecte outras formas de entrar na sua conta — Google, Facebook e TikTok. Se um dia você esquecer a senha, entra por qualquer uma das conexões abaixo.</p>
+    <div id="link-accounts-2" style="display:grid;gap:8px"></div>
+   </div>
+   <div class="pf-sec"><span class="pf-st">Notificações do organizador</span>
+    <div id="pf-notes" style="display:grid;gap:8px"></div>
+    <button class="btn sm ghost" type="button" id="pf-notes-read" style="justify-self:start;margin-top:4px">Marcar todas como lidas</button>
+   </div>
+   <div class="pf-sec"><span class="pf-st">Conta e preferências</span>
+    <button class="pf-row" type="button" id="pf-theme"><span><span class="icn" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13.5A8.5 8.5 0 0 1 10.5 4a8.5 8.5 0 1 0 9.5 9.5z"/></svg></span> Tema do site</span><span class="hint" id="pf-theme-v"></span></button>
+    <button class="pf-row" type="button" data-open="wallet"><span><span class="icn" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="6" width="19" height="13" rx="3"/><path d="M2.5 10h19" opacity=".55"/><circle cx="17" cy="13.5" r="1.4" fill="currentColor" stroke="none"/></svg></span> Minha carteira</span><span class="hint">›</span></button>
+    <button class="pf-row" type="button" data-terms="1"><span><span class="icn" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4.5" y="10.5" width="15" height="10" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/><circle cx="12" cy="15.5" r="1.3" fill="currentColor" stroke="none"/></svg></span> Termos e permissões</span><span class="hint">›</span></button>
+    <button class="pf-row" type="button" id="pf-sup"><span><span class="icn" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13a8 8 0 0 1 16 0"/><rect x="3" y="13" width="4" height="6" rx="2"/><rect x="17" y="13" width="4" height="6" rx="2"/><path d="M19 19a4 4 0 0 1-4 2h-2"/></svg></span> Suporte</span><span class="hint">›</span></button>
+    <button class="pf-row out" type="button" id="pf-logout"><span><span class="icn" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h3"/><path d="m15 8 4 4-4 4M19 12H9"/></svg></span> Sair da conta</span></button>
+   </div>
+  </div>
+ </div>
+</div>
+
+<!-- ═══ BARRA DE NAVEGAÇÃO INFERIOR (celular) ═══ -->
+<nav class="tabbar" id="tabbar" aria-label="Navegação rápida">
+ <button type="button" data-evtopen="1" aria-label="Abrir a Central de Eventos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="16" rx="2.5"/><path d="M8 3v4M16 3v4M3.5 10h17M8 14h3"/></svg><span>Eventos</span><span class="tb-badge mono" id="tb-evt" hidden>0</span></button>
+ <a href="#sorteios" data-tb="sorteios"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8a2 2 0 002-2h14a2 2 0 002 2v2a2 2 0 000 4v2a2 2 0 00-2 2H5a2 2 0 00-2-2v-2a2 2 0 000-4zM14 6v12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Sorteios</span><span class="tb-badge mono" id="tb-draws" hidden>0</span></a>
+ <button type="button" class="tb-main" data-tb="wallet" id="tb-wal"><span class="tbm"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h15a3 3 0 013 3v7a3 3 0 01-3 3H6a3 3 0 01-3-3zM3 7l12-3v3M17 13.5h.01" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Carteira</span><span class="tb-badge mono" id="tb-wbadge" hidden>0</span></button>
+ <button type="button" data-ogopen="1" aria-label="Abrir as Tarefas Yshippcommerce em tela cheia"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="4" width="15" height="17" rx="2"/><path d="M9 4.2V2.8h6v1.4M8.5 12.5l2.2 2.2 4.8-4.8M8.5 17h7"/></svg><span>Tarefas</span></button>
+ <button type="button" data-tb="profile" data-open="profile"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 12a4 4 0 100-8 4 4 0 000 8zM4 21a8 8 0 0116 0" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Perfil</span><span class="tb-badge mono" id="tb-notes" hidden>0</span></button>
+</nav>
+
+<!-- ═══ NOTIFICAÇÕES (estilo celular: avisos do site + mensagens do painel, desliza para sair) ═══ -->
+<div id="notes" aria-live="polite"></div>
+<div class="sup-modal" id="note-modal" hidden>
+ <div class="sup-box" role="dialog" aria-label="Notificação do organizador">
+  <div class="sup-head"><b id="note-title"><i class=yi data-i=megaphone></i> Notificação</b><button class="ib sm" id="note-close" aria-label="Fechar notificação">✕</button></div>
+  <iframe id="note-frame" class="sup-frame" title="Notificação do organizador" sandbox="allow-scripts allow-forms allow-popups allow-modals"></iframe>
+ </div>
+</div>
+
+<script type="module" src="assets/js/public/app.js"></script>
+<script src="assets/js/public/wallet-effects.js"></script>
+<script src="assets/js/public/carousel-hints.js"></script>
+<script src="assets/js/public/ad-slot-layout.js"></script>
+
+<script src="assets/js/public/back-to-top.js"></script>
+
+
+
+</body>
+</html>
