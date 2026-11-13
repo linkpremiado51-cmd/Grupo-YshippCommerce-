@@ -1,1 +1,0 @@
-(function(){var t;try{t=localStorage.getItem("th")}catch(e){}if(t!=="light"&&t!=="dark")t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";document.documentElement.dataset.theme=t;try{var m=document.querySelector('meta[name="theme-color"]');if(m)m.content=t==="light"?"#fafafa":"#0b0e11"}catch(e){}})()
